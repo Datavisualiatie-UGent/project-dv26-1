@@ -4,7 +4,7 @@ import { data } from "../data.js";
 const id = "horizontale bar van aantal talen";
 const element = document.getElementById(id);
 if (!element) console.error(`element ${id} niet gevonden`);
-const grafiek = d3.select(element).selectAll();
+const grafiek = d3.select(element).append("table").selectAll();
 
 const bar_stijl = document.createElement("style");
 bar_stijl.textContent = `
@@ -14,7 +14,6 @@ bar_stijl.textContent = `
     color: white;
     background-color: darkgreen;}`;
 element.appendChild(bar_stijl);
-
 
 const familie_telling = Object.entries(
     data.reduce((acc, curr, index) => {
@@ -27,7 +26,7 @@ const familie_telling = Object.entries(
         if (curr[1] < 50) acc[0][1] += curr[1];
         else acc = acc.concat([curr]);
         return acc;
-    }, [["others (< 50 languages)", 0]])
+    }, [["andere (< 50 talen)", 0]])
     .reverse()
     .filter(d => !(["NA", "Unattested", "Unclassifiable"].includes(d[0])));
 
@@ -44,7 +43,7 @@ const kolommen = rijen.append("td")
     .style("padding", "0px")
     .append("div")
     .attr("class", "bar")
-    .style("width", d => `${d[1]}px`);
+    .style("width", d => `${d[1]*.9}px`);
 
 kolommen.append("div")
     .text(d => d[1])

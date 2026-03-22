@@ -9,7 +9,7 @@ const graph = d3.select(element);
 const familie_telling = Object.entries(
     data.reduce((acc, curr, index) => {
         if (curr.family in acc) acc[curr.family]++;
-        else acc[curr.family] = 0;
+        else acc[curr.family] = 1;
         return acc;
     }, {}))
     .sort((a, b) => b[1] - a[1]);
