@@ -1,39 +1,106 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Data Visualisatie - Talen en Kolonisatie</title>
+    <link rel="stylesheet" href="./stijl.css">
+</head>
+
 <body>
-    <style>
-        div.blok{
-            background-color: lightgray;
-            margin: 10px;
-        }
-    </style>
-    hallo dit is onze mooie site.
-    <div>
-        hierzie de verdeling van de grootte van de taalfamilies, zoals te zien is is het ongeveer een 1/x verdeling ofzo.
-        <div class="blok" id="lijn van de verdeling van aantal talen per familie"></div>
-    </div>
-    <div>
-        hier is de exacte grootte van de grootste talen te zien met de kleinere talen samengevoegd in 1 familie. door de lange staart van
-        de grafiek (zie <a href="#lijn van de verdeling van aantal talen per familie">grafiek van de verdeling van taalgrootte</a>) is dit
-        de grootste familie.
-        <div class="blok" id="horizontale bar van aantal talen"></div>
-    </div>
-    <div>
-        het is soort van een historische dataset dus op deze bol valt dan te zien hoeveel procent van de huidige talen uitgestorven is.
-        En ook de bedreigdheid enzo.
-        <div class="blok" id="bol van hoeveelheid uitgestorven talen"></div>
-    </div>
-    <div>
-        kolonisatieverhaal: hieronder vergelijken we enkele koloniale talen tussen het traditionele (time-of-contact)
-        en hedendaagse bestand. Zo zie je welke talen geografisch groter of kleiner zijn geworden.
-        <div class="blok" id="koloniale talen: traditioneel vs hedendaags"></div>
-    </div>
-    <div>
-        nettoverandering in areaal per koloniale taal. Positief betekent groter in het hedendaagse bestand.
-        <div class="blok" id="koloniale talen: netto verandering"></div>
-    </div>
-    <div>
-        kaartverhaal van kolonisatie: zoek op alle talen, kies traditional of contemporary,
-        en zoom in op de kaart om lokale patronen te bekijken.
-        <div class="blok" id="koloniale talen: kaart over tijd"></div>
-    </div>
+    <main class="pagina">
+        <header class="hero">
+            <p class="label">Course project - Data Visualisatie</p>
+            <h1>Talen, kolonisatie en geografische verschuiving</h1>
+            <p>
+                In deze website onderzoeken we hoe taalgebieden door de tijd veranderen.
+                Met de Asher/Glottography datasets vergelijken we traditional (time-of-contact)
+                en contemporary verspreiding om patronen van uitbreiding, verdringing en fragmentatie zichtbaar te maken.
+            </p>
+        </header>
+
+        <section class="intro">
+            <h2>Ons kolonisatieverhaal in het kort</h2>
+            <p>
+                Kolonisatie kunnen we lezen als een ruimtelijk proces: sommige talen werden in grotere gebieden dominant,
+                terwijl andere talen terrein verloren of uit het zicht raakten in kaarten en administratie.
+                Onze visualisaties tonen die verschuivingen als meetbare patronen. Ze zijn geen volledig historisch bewijs op zichzelf,
+                maar een datagedreven basis voor verdere interpretatie.
+            </p>
+        </section>
+
+        <section class="sectie">
+            <h2>1) Structuur van de talenwereld</h2>
+            <p class="context">
+                Context: eerst bekijken we hoe talen over families verdeeld zijn. Dit helpt om te begrijpen of veranderingen later
+                vooral in een paar grote families zitten of breder verspreid zijn.
+            </p>
+
+            <article class="kaart">
+                <h3>Verdeling van aantal talen per familie</h3>
+                <p>
+                    Deze visualisatie laat de typische scheve verdeling zien: een kleine groep families bevat heel veel talen,
+                    terwijl veel families klein zijn.
+                </p>
+                <div class="blok" id="lijn van de verdeling van aantal talen per familie"></div>
+            </article>
+
+            <article class="kaart">
+                <h3>Topfamilies en lange staart</h3>
+                <p>
+                    Hier tonen we absolute aantallen, met kleine families samengevoegd.
+                    Zo wordt de schaal van dominante families beter leesbaar.
+                </p>
+                <div class="blok" id="horizontale bar van aantal talen"></div>
+            </article>
+
+            <article class="kaart">
+                <h3>Status van bedreiging en uitsterving</h3>
+                <p>
+                    Deze verdeling koppelt geografische verandering aan taalvitaliteit: welke talen zijn stabiel,
+                    bedreigd of al uitgestorven?
+                </p>
+                <div class="blok" id="bol van hoeveelheid uitgestorven talen"></div>
+            </article>
+        </section>
+
+        <section class="sectie">
+            <h2>2) Koloniale verschuiving in taalgebieden</h2>
+            <p class="context">
+                Context: in deze reeks vergelijken we direct traditional en contemporary verspreiding.
+                Het doel is om te zien waar koloniale talen terrein winnen en waar historische taalgebieden kleiner worden.
+            </p>
+
+            <article class="kaart">
+                <h3>Traditional versus contemporary (koloniale talen)</h3>
+                <p>
+                    Vergelijking van spreidingsoppervlakte per taal tussen beide tijdslagen.
+                </p>
+                <div class="blok" id="koloniale talen: traditioneel vs hedendaags"></div>
+            </article>
+
+            <article class="kaart">
+                <h3>Netto verandering van areaal</h3>
+                <p>
+                    Positief betekent groter zichtbaar gebied in contemporary; negatief betekent afname t.o.v. traditional.
+                </p>
+                <div class="blok" id="koloniale talen: netto verandering"></div>
+            </article>
+
+            <article class="kaart focus">
+                <h3>Interactieve kaart: kies taal, vergelijk en zoom</h3>
+                <p>
+                    Gebruik de zoekfunctie om een taal te selecteren, wissel tussen traditional en contemporary,
+                    en klik op polygonen om direct een taal op de kaart te kiezen.
+                </p>
+                <div class="blok" id="koloniale talen: kaart over tijd"></div>
+            </article>
+        </section>
+
+        <footer class="voetnoot">
+            <strong>Methodologische noot:</strong>
+            deze visualisaties tonen patronen in de gebruikte dataset. Historische causaliteit rond kolonisatie
+            vraagt altijd aanvullende bronnen per regio.
+        </footer>
+    </main>
+
     <script src="../js/main.js" type="module"></script>
 </body>
