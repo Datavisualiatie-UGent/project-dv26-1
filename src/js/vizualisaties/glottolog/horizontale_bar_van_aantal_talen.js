@@ -12,7 +12,8 @@ bar_stijl.textContent = `
     width: 20px;
     height: 22px;
     color: white;
-    background-color: darkgreen;}`;
+    background-color: darkgreen;}
+`;
 element.appendChild(bar_stijl);
 
 const familie_telling = Object.entries(
@@ -29,8 +30,6 @@ const familie_telling = Object.entries(
     }, [["andere (< 50 talen)", 0]])
     .reverse()
     .filter(d => !(["NA", "Unattested", "Unclassifiable", "Bookkeeping"].includes(d[0])));
-
-console.log(familie_telling);
 
 const rijen = grafiek
     .data(familie_telling)

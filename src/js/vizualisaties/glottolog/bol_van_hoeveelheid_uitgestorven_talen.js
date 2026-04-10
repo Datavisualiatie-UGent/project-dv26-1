@@ -13,7 +13,7 @@ const graph = d3.select(element);
 const width = 800;
 const height = 600;
 
-const codes = {
+const bedreigdheidsnamen = {
     "not endangered":1,
     "threatened":2,
     "shifting":3,
@@ -28,7 +28,7 @@ const bedreigdheden = Object.entries(data
         else acc = { [curr["status_label"]]: 1, ...acc };
         return acc;
     }, {})
-).sort((a,b) => codes[a[0]] - codes[b[0]]);
+).sort((a,b) => bedreigdheidsnamen[a[0]] - bedreigdheidsnamen[b[0]]);
 
 const svg = graph
     .append("svg")
@@ -39,14 +39,12 @@ const svg = graph
 const kleur = d3
     .scaleOrdinal()
     .domain(bedreigdheden.map(d => d[1]))
-    .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), bedreigdheden.length).reverse())
+    .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), bedreigdheden.length-1).reverse())
 
 const bogen = d3
     .pie()
     .sort(null)
     .value(d => d[1])(bedreigdheden);
-
-console.log(bogen);
 
 const boog = d3.arc()
     .innerRadius(0)
@@ -73,6 +71,7 @@ legende.append("rect")
     .attr("y", height/2-150+5)
     .attr("width", 200)
     .attr("height", 150-5)
+    .attr("rx", 10)
     .attr("fill", "darkgrey")
 
 legende
@@ -81,6 +80,7 @@ legende
     .attr("y", height/2-150+10+3)
     .attr("width", 200-20)
     .attr("height", 150-20-3)
+    .attr("rx", 10)
     .attr("fill", "white");
 
 legende
@@ -101,4 +101,5 @@ legende
     .attr("y", d => height/2-150+10+18*bedreigdheden.indexOf(d)+4)
     .attr("width", 18-1)
     .attr("height", 18-1)
+    .attr("rx", 5)
     .attr("fill", d => d[0] == "NA"? "darkgrey": kleur(d[1]))
