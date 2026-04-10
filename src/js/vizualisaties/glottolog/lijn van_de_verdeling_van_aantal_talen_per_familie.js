@@ -1,5 +1,5 @@
-import "../d3.v7.js";
-import { data } from "../data.js";
+import "../../d3.v7.js";
+import { data } from "../../data.js";
 
 const id = "lijn van de verdeling van aantal talen per familie";
 const element = document.getElementById(id);

@@ -1,15 +1,15 @@
-import "../d3.v7.js";
-import { data } from "../data.js";
+import "../../d3.v7.js";
+import { data } from "../../data.js";
 
 const id = "horizontale bar van aantal talen";
 const element = document.getElementById(id);
 if (!element) console.error(`element ${id} niet gevonden`);
-const grafiek = d3.select(element).append("table").selectAll();
+const grafiek = d3.select(element).append("table").style("width", "100%").selectAll();
 
 const bar_stijl = document.createElement("style");
 bar_stijl.textContent = `
     div.bar {
-    width: 1000px;
+    width: 20px;
     height: 22px;
     color: white;
     background-color: darkgreen;}`;
@@ -28,7 +28,9 @@ const familie_telling = Object.entries(
         return acc;
     }, [["andere (< 50 talen)", 0]])
     .reverse()
-    .filter(d => !(["NA", "Unattested", "Unclassifiable"].includes(d[0])));
+    .filter(d => !(["NA", "Unattested", "Unclassifiable", "Bookkeeping"].includes(d[0])));
+
+console.log(familie_telling);
 
 const rijen = grafiek
     .data(familie_telling)
@@ -37,13 +39,14 @@ const rijen = grafiek
 
 rijen.append("td")
     .style("padding", "0px")
+    .style("width", "20%")
     .text(d => d[0]);
 
 const kolommen = rijen.append("td")
     .style("padding", "0px")
     .append("div")
     .attr("class", "bar")
-    .style("width", d => `${d[1]*.9}px`);
+    .style("width", d => `${d[1]/familie_telling.reduce((a,b) => Math.max(a,b[1]), 0)*100}%`)
 
 kolommen.append("div")
     .text(d => d[1])

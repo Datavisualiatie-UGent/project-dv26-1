@@ -1,5 +1,5 @@
-import "../d3.v7.js";
-import { data } from "../data.js";
+import "../../d3.v7.js";
+import { data } from "../../data.js";
 
 /*
  * ik weet niet hoe het zit met bronvermelding enzo maar ik heb alles van dit bestand deels gestolen van https://observablehq.com/@d3/pie-chart/2
