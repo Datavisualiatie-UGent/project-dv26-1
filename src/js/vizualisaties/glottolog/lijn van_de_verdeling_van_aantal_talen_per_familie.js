@@ -14,7 +14,7 @@ const familie_telling = Object.entries(
     }, {}))
     .sort((a, b) => b[1] - a[1]);
 
-const rand = { boven: 10, beneden: 20, links: 60, rechts: 10 },
+const rand = { boven: 10, beneden: 30, links: 60, rechts: 10 },
     hoogte = 600,
     breedte = 800;
 
@@ -46,3 +46,11 @@ tekening.selectAll("rect")
 tekening.append("g")
     .attr("transform", `translate(${rand.links}, ${rand.boven})`)
     .call(d3.axisLeft(y_as));
+
+tekening.append("text")
+    .attr("transform", `rotate(-90) translate(-${hoogte/3*2},15)`)
+    .text("number of languages in family")
+
+tekening.append("text")
+    .attr("transform", `translate(${breedte/2},${hoogte-3})`)
+    .text("language families sorted by size")
