@@ -18,7 +18,7 @@ const namen = ["not endangered", "threatened", "shifting", "moribund", "nearly e
 const kleur = d3
     .scaleOrdinal()
     .domain(namen)
-    .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), namen.length-1).reverse())
+    .range(d3.schemeTableau10)
 
 let puntjes = data.map(d => ({
     x: projection([d["longitude"], d["latitude"]])[0],

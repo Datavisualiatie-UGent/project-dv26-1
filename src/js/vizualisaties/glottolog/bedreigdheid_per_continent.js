@@ -10,7 +10,7 @@ const bedreigdheidsnamen = ["not endangered", "threatened", "shifting", "moribun
 const kleur = d3
     .scaleOrdinal()
     .domain(bedreigdheidsnamen)
-    .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), bedreigdheidsnamen.length-1).reverse())
+    .range(d3.schemeTableau10)
 
 const clean_data = data.filter(d => d["macroarea"] != "NA").flatMap(d => d["macroarea"].split(";").map(macroarea => ({...d, macroarea: macroarea})));
 const macroareas = [...new Set(clean_data.map(d => d["macroarea"]))];

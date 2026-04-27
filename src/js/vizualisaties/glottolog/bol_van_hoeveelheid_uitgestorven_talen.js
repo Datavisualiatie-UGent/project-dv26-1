@@ -39,7 +39,7 @@ const svg = graph
 const kleur = d3
     .scaleOrdinal()
     .domain(bedreigdheden.map(d => d[1]))
-    .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), bedreigdheden.length-1).reverse())
+    .range(d3.schemeTableau10)
 
 const bogen = d3
     .pie()
