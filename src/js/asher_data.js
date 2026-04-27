@@ -1,6 +1,6 @@
 import "./d3.v7.js";
 
-const BASE_PATH = "/data/asher2007world-v2.0/Glottography-asher2007world-2010223/cldf";
+const BASE_PATH = "/data/";
 
 let cache = null;
 
