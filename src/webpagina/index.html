@@ -1,17 +1,159 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="./">
+
     <title>Talen en Geografische Structuren</title>
+
     <link rel="stylesheet" href="./stijl.css">
 </head>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const toggle =
+        document.getElementById("sidebarToggle");
+
+    /* TOGGLE */
+
+    if (toggle && sidebar) {
+
+        toggle.addEventListener("click", () => {
+
+            sidebar.classList.toggle("open");
+
+        });
+
+    }
+
+    /* ACTIVE SECTION */
+
+    const links =
+        document.querySelectorAll(".sidebar a");
+
+    const sections =
+        document.querySelectorAll("section[id]");
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+        sections.forEach(section => {
+
+            const top =
+                section.offsetTop - 180;
+
+            const height =
+                section.offsetHeight;
+
+            if (
+                scrollY >= top &&
+                scrollY < top + height
+            ) {
+
+                current =
+                    section.getAttribute("id");
+            }
+
+        });
+
+        links.forEach(link => {
+
+            link.classList.remove("active");
+
+            if (
+                link.getAttribute("href") ===
+                `#${current}`
+            ) {
+
+                link.classList.add("active");
+            }
+
+        });
+
+    });
+
+});
+
+</script>
+
 <body>
+
+    <nav class="topnav">
+
+        <div class="topnav-inner">
+
+            <a class="logo" href="index.html">
+                Talen & Kolonisatie
+            </a>
+
+            <div class="nav-links">
+
+                <a class="active" href="index.html">
+                    De talenwereld
+                </a>
+
+                <a href="kolonisatie.html">
+                    Koloniale verschuiving
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <button class="sidebar-toggle" id="sidebarToggle">
+        ☰
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+
+        <a href="#wereld">
+            Wereld
+        </a>
+
+        <a href="#structuur">
+            Structuur
+        </a>
+
+        <a href="#families-bar">
+            Families
+        </a>
+
+        <a href="#druk">
+            Bedreiging
+        </a>
+
+        <a href="#kaart">
+            Wereldkaart
+        </a>
+
+        <a href="#families-kaart">
+            Families op kaart
+        </a>
+
+        <a href="#continenten">
+            Continenten
+        </a>
+
+    </aside>
+
     <header class="hero">
-        <div class="hero-inner">
-            <p class="eyebrow">Datavisualisatie · Talen en Kolonisatie</p>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                Datavisualisatie
+            </p>
 
             <h1>
                 Hoe talen zich verspreiden,
@@ -23,24 +165,25 @@
                 Sommige groeien uit tot wereldtalen,
                 andere verdwijnen langzaam uit kaarten,
                 administratie en collectief geheugen.
-                In deze interactieve analyse onderzoeken we hoe taalgebieden
-                veranderen door tijd, macht en kolonisatie.
             </p>
 
-            <nav class="navigatie">
-                <a href="index.html" class="active">De talenwereld</a>
-                <a href="kolonisatie.html">Koloniale verschuiving</a>
-            </nav>
         </div>
+
     </header>
 
-    <main>
+    <main class="pagina">
 
-        <section class="verhaal intro-verhaal">
+        <section class="verhaal" id="wereld">
+
             <div class="tekstblok breed">
-                <p class="hoofdstuk">Hoofdstuk 1</p>
 
-                <h2>Een wereld van duizenden talen</h2>
+                <p class="hoofdstuk">
+                    Hoofdstuk 1
+                </p>
+
+                <h2>
+                    Een wereld van duizenden talen
+                </h2>
 
                 <p>
                     Elke taal vertelt een verhaal over migratie,
@@ -54,17 +197,20 @@
                     De Glottolog-dataset verzamelt meer dan 8600 talen
                     die ooit beschreven werden.
                     Hoewel deze dataset nooit volledig kan zijn,
-                    laat ze wel toe om patronen zichtbaar te maken:
-                    waar talen zich concentreren,
-                    welke families domineren
-                    en waar talen sneller verdwijnen.
+                    laat ze wel toe om patronen zichtbaar te maken.
                 </p>
+
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie">
+        <section class="visualisatie-layout" id="structuur">
+
             <div class="tekstblok">
-                <h2>De structuur van de talenwereld</h2>
+
+                <h2>
+                    De structuur van de talenwereld
+                </h2>
 
                 <p>
                     Wanneer we talen groeperen per familie,
@@ -73,148 +219,167 @@
                     terwijl honderden andere families slechts uit enkele talen bestaan.
                 </p>
 
-                <p>
-                    Dit soort verdelingen komt vaak voor in complexe historische systemen.
-                    Grote families konden zich over continenten verspreiden,
-                    terwijl kleinere groepen geografisch geïsoleerd bleven.
-                </p>
             </div>
 
-            <div class="visualisatie groot">
-                <div class="blok" id="lijn van de verdeling van aantal talen per familie"></div>
+            <div class="grafiek groot">
+                <div class="blok"
+                    id="lijn van de verdeling van aantal talen per familie"></div>
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie omgekeerd">
-            <div class="visualisatie">
-                <div class="blok" id="horizontale bar van aantal talen"></div>
+        <section class="visualisatie-layout omgekeerd" id="families-bar">
+
+            <div class="grafiek">
+                <div class="blok"
+                    id="horizontale bar van aantal talen"></div>
             </div>
 
             <div class="tekstblok">
-                <h2>Dominante families en een lange staart</h2>
+
+                <h2>
+                    Dominante families en een lange staart
+                </h2>
 
                 <p>
-                    Achter de grootste taalfamilies schuilt een lange staart van kleinere groepen.
+                    Achter de grootste taalfamilies schuilt een lange staart
+                    van kleinere groepen.
                     Die fragmentatie vertelt iets over hoe gemeenschappen leefden:
                     geïsoleerd in valleien,
                     verspreid over eilanden
                     of afgescheiden door natuurlijke barrières.
                 </p>
 
-                <p>
-                    Tegelijk zien we hoe bepaalde families
-                    door expansie, staatsvorming of kolonisatie
-                    veel grotere invloed kregen.
-                </p>
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie">
+        <section class="visualisatie-layout" id="druk">
+
             <div class="tekstblok">
-                <h2>Talen onder druk</h2>
+
+                <h2>
+                    Talen onder druk
+                </h2>
 
                 <p>
                     Niet elke taal overleeft de geschiedenis.
                     Sommige verdwijnen geleidelijk doordat sprekers
                     overstappen naar dominante talen.
-                    Andere verdwijnen abrupt door migratie,
-                    kolonisatie of gedwongen assimilatie.
                 </p>
 
-                <p>
-                    De dataset toont hoe groot het aandeel bedreigde
-                    en uitgestorven talen inmiddels geworden is.
-                </p>
             </div>
 
-            <div class="visualisatie klein">
-                <div class="blok" id="bol van hoeveelheid uitgestorven talen"></div>
+            <div class="grafiek">
+                <div class="blok"
+                    id="bol van hoeveelheid uitgestorven talen"></div>
             </div>
+
         </section>
 
-        <section class="volledig">
+        <section class="volledig" id="kaart">
+
             <div class="tekstblok breed gecentreerd">
-                <h2>Waar talen ontstaan en verdwijnen</h2>
+
+                <h2>
+                    Waar talen ontstaan en verdwijnen
+                </h2>
 
                 <p>
                     Op wereldschaal worden historische patronen zichtbaar.
                     Grote concentraties talen verschijnen in gebieden
-                    met geografische fragmentatie,
-                    zoals regenwouden, bergketens en archipels.
-                    Tegelijk zien we dat gecentraliseerde staten
-                    vaak minder taaldiversiteit tonen.
+                    met geografische fragmentatie.
                 </p>
+
             </div>
 
-            <div class="kaartblok">
-                <div class="blok kaart-groot" id="kaart met puntjes van de talen"></div>
+            <div class="kaart-container">
+
+                <div class="blok kaart-groot"
+                    id="kaart met puntjes van de talen"></div>
+
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie omgekeerd">
-            <div class="visualisatie groot">
-                <div class="blok" id="kaart met puntjes van de talen per familie"></div>
+        <section class="visualisatie-layout omgekeerd" id="families-kaart">
+
+            <div class="grafiek groot">
+
+                <div class="blok"
+                    id="kaart met puntjes van de talen per familie"></div>
+
             </div>
 
             <div class="tekstblok">
-                <h2>Taalfamilies verspreid over de aarde</h2>
+
+                <h2>
+                    Taalfamilies verspreid over de aarde
+                </h2>
 
                 <p>
                     Door individuele taalfamilies te selecteren,
                     kunnen we zien hoe historische migratiepatronen
                     zich geografisch verspreidden.
-                    Sommige families blijven geconcentreerd,
-                    terwijl andere zich over enorme gebieden uitstrekken.
                 </p>
 
                 <label for="selecteer familie">
-                    Kies een taalfamilie:
+                    Kies een taalfamilie
                 </label>
 
                 <select id="selecteer familie"></select>
+
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie">
+        <section class="visualisatie-layout" id="continenten">
+
             <div class="tekstblok">
-                <h2>Continenten en taalverlies</h2>
+
+                <h2>
+                    Continenten en taalverlies
+                </h2>
 
                 <p>
-                    Kolonisatie en staatsvorming hadden niet overal dezelfde impact.
                     Vooral in Amerika en Australië
                     is het aandeel verdwenen talen opvallend hoog.
                 </p>
 
-                <p>
-                    Door bedreiging per continent te vergelijken,
-                    zien we hoe historische machtsverschuivingen
-                    vandaag nog zichtbaar blijven.
-                </p>
             </div>
 
-            <div class="visualisatie">
-                <div class="blok" id="bedreigdheid per continent"></div>
+            <div class="grafiek">
+
+                <div class="blok"
+                    id="bedreigdheid per continent"></div>
+
             </div>
-        </section>
 
-        <section class="einde">
-            <div class="tekstblok breed gecentreerd">
-                <h2>Van taaldiversiteit naar koloniale verschuiving</h2>
-
-                <p>
-                    Talen veranderen niet alleen intern.
-                    Ze verschuiven ook geografisch door macht,
-                    handel, migratie en kolonisatie.
-                </p>
-
-                <a href="kolonisatie.html" class="volgende-knop">
-                    Verder naar koloniale verschuiving →
-                </a>
-            </div>
         </section>
 
     </main>
 
     <script src="../js/main.js" type="module"></script>
+
 </body>
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <p>
+            Gemaakt door
+            Jona Reynaert,
+            Jaron Batens
+            en Adriaan Jacquet
+        </p>
+
+        <p>
+            Achtergrondbeelden via Unsplash
+        </p>
+
+    </div>
+
+</footer>
+
 </html>

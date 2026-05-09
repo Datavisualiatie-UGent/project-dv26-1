@@ -1,17 +1,147 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="./">
-    <title>Koloniale Verschuiving van Taalgebieden</title>
+
+    <title>Koloniale Verschuiving</title>
+
     <link rel="stylesheet" href="./stijl.css">
 </head>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const toggle =
+        document.getElementById("sidebarToggle");
+
+    /* TOGGLE */
+
+    if (toggle && sidebar) {
+
+        toggle.addEventListener("click", () => {
+
+            sidebar.classList.toggle("open");
+
+        });
+
+    }
+
+    /* ACTIVE SECTION */
+
+    const links =
+        document.querySelectorAll(".sidebar a");
+
+    const sections =
+        document.querySelectorAll("section[id]");
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+        sections.forEach(section => {
+
+            const top =
+                section.offsetTop - 180;
+
+            const height =
+                section.offsetHeight;
+
+            if (
+                scrollY >= top &&
+                scrollY < top + height
+            ) {
+
+                current =
+                    section.getAttribute("id");
+            }
+
+        });
+
+        links.forEach(link => {
+
+            link.classList.remove("active");
+
+            if (
+                link.getAttribute("href") ===
+                `#${current}`
+            ) {
+
+                link.classList.add("active");
+            }
+
+        });
+
+    });
+
+});
+
+</script>
+
 <body>
-    <header class="hero donker">
-        <div class="hero-inner">
-            <p class="eyebrow">Datavisualisatie · Kolonisatie</p>
+
+    <nav class="topnav">
+
+        <div class="topnav-inner">
+
+            <a class="logo" href="index.html">
+                Talen & Kolonisatie
+            </a>
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    De talenwereld
+                </a>
+
+                <a class="active" href="kolonisatie.html">
+                    Koloniale verschuiving
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <button class="sidebar-toggle" id="sidebarToggle">
+        ☰
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+
+        <a href="#infrastructuur">
+            Infrastructuur
+        </a>
+
+        <a href="#verschuiving">
+            Verschuiving
+        </a>
+
+        <a href="#verlies">
+            Verlies
+        </a>
+
+        <a href="#kaart">
+            Kaart
+        </a>
+
+    </aside>
+
+    <header class="hero">
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                Datavisualisatie
+            </p>
 
             <h1>
                 Hoe kolonisatie taalgebieden herschreef
@@ -20,123 +150,130 @@
             <p class="lead">
                 Kolonisatie veranderde niet alleen politieke grenzen,
                 maar ook de zichtbaarheid van talen.
-                Sommige talen breidden zich uit over continenten,
-                terwijl andere lokale talen terrein verloren
-                of volledig verdwenen.
             </p>
 
-            <nav class="navigatie">
-                <a href="index.html">De talenwereld</a>
-                <a href="kolonisatie.html" class="active">
-                    Koloniale verschuiving
-                </a>
-            </nav>
         </div>
+
     </header>
 
-    <main>
+    <main class="pagina">
 
-        <section class="verhaal intro-verhaal">
+        <section class="verhaal" id="infrastructuur">
+
             <div class="tekstblok breed">
-                <p class="hoofdstuk">Hoofdstuk 2</p>
 
-                <h2>Talen als koloniale infrastructuur</h2>
+                <p class="hoofdstuk">
+                    Hoofdstuk 2
+                </p>
+
+                <h2>
+                    Talen als koloniale infrastructuur
+                </h2>
 
                 <p>
                     Talen verspreiden zich niet willekeurig.
-                    Vaak volgen ze routes van macht:
-                    handel, administratie, onderwijs,
-                    religie en militaire expansie.
+                    Vaak volgen ze routes van macht.
                 </p>
 
-                <p>
-                    In deze vergelijking onderzoeken we
-                    het verschil tussen traditionele taalgebieden
-                    en hedendaagse verspreiding.
-                    Zo wordt zichtbaar welke talen hun invloed uitbreidden
-                    en welke taalgebieden kleiner werden.
-                </p>
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie">
+        <section class="visualisatie-layout" id="verschuiving">
+
             <div class="tekstblok">
-                <h2>Traditioneel tegenover hedendaags</h2>
+
+                <h2>
+                    Traditioneel tegenover hedendaags
+                </h2>
 
                 <p>
                     Sommige talen zijn vandaag zichtbaar
                     in veel grotere gebieden dan historisch het geval was.
-                    Dat geldt vooral voor koloniale talen
-                    die zich via imperiale netwerken verspreidden.
                 </p>
 
-                <p>
-                    De vergelijking tussen beide tijdslagen toont
-                    hoe sterk geografische taalverhoudingen veranderden.
-                </p>
             </div>
 
-            <div class="visualisatie groot">
-                <div class="blok" id="koloniale talen: traditioneel vs hedendaags"></div>
+            <div class="grafiek groot">
+
+                <div class="blok"
+                    id="koloniale talen: traditioneel vs hedendaags"></div>
+
             </div>
+
         </section>
 
-        <section class="verhaal visualisatie-sectie omgekeerd">
-            <div class="visualisatie groot">
-                <div class="blok" id="koloniale talen: netto verandering"></div>
+        <section class="visualisatie-layout omgekeerd" id="verlies">
+
+            <div class="grafiek groot">
+
+                <div class="blok"
+                    id="koloniale talen: netto verandering"></div>
+
             </div>
 
             <div class="tekstblok">
-                <h2>Groei, verdringing en verlies</h2>
+
+                <h2>
+                    Groei, verdringing en verlies
+                </h2>
 
                 <p>
-                    Niet elke verandering betekent groei.
-                    Sommige historische taalgebieden fragmenteren,
-                    verdwijnen uit administratieve kaarten
-                    of worden overschaduwd door dominante talen.
+                    Sommige historische taalgebieden fragmenteren
+                    of verdwijnen uit administratieve kaarten.
                 </p>
 
-                <p>
-                    De netto verandering toont welke talen zichtbaar terrein winnen
-                    en welke taalgebieden historisch krimpen.
-                </p>
             </div>
+
         </section>
 
-        <section class="volledig donkerblok">
+        <section class="volledig donkervlak" id="kaart">
+
             <div class="tekstblok breed gecentreerd licht">
-                <h2>Interactieve vergelijking van taalgebieden</h2>
+
+                <h2>
+                    Interactieve vergelijking van taalgebieden
+                </h2>
 
                 <p>
-                    Kies een taal,
-                    wissel tussen historische en hedendaagse verspreiding
-                    en zoom in op individuele regio's.
-                </p>
-            </div>
-
-            <div class="kaartblok">
-                <div class="blok kaart-groot" id="koloniale talen: kaart over tijd"></div>
-            </div>
-        </section>
-
-        <section class="einde">
-            <div class="tekstblok breed gecentreerd">
-                <h2>Een veranderend taallandschap</h2>
-
-                <p>
-                    Taalgebieden zijn geen vaste grenzen.
-                    Ze bewegen mee met geschiedenis,
-                    macht, migratie en culturele invloed.
+                    Kies een taal en vergelijk historische
+                    en hedendaagse verspreiding.
                 </p>
 
-                <a href="index.html" class="volgende-knop">
-                    ← Terug naar de talenwereld
-                </a>
             </div>
+
+            <div class="kaart-container">
+
+                <div class="blok kaart-groot"
+                    id="koloniale talen: kaart over tijd"></div>
+
+            </div>
+
         </section>
 
     </main>
 
     <script src="../js/main.js" type="module"></script>
+
 </body>
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <p>
+            Gemaakt door
+            Jona Reynaert,
+            Jaron Batens
+            en Adriaan Jacquet
+        </p>
+
+        <p>
+            Achtergrondbeelden via Unsplash
+        </p>
+
+    </div>
+
+</footer>
+
 </html>
