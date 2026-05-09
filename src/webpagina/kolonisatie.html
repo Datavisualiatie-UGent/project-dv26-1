@@ -113,26 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ☰
     </button>
 
-    <aside class="sidebar" id="sidebar">
-
-        <a href="#infrastructuur">
-            Infrastructuur
-        </a>
-
-        <a href="#verschuiving">
-            Verschuiving
-        </a>
-
-        <a href="#verlies">
-            Verlies
-        </a>
-
-        <a href="#kaart">
-            Kaart
-        </a>
-
-    </aside>
-
     <header class="hero">
 
         <div class="hero-overlay"></div>
@@ -156,102 +136,126 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </header>
 
-    <main class="pagina">
+    <div class="layout">
 
-        <section class="verhaal" id="infrastructuur">
+        <aside class="sidebar" id="sidebar">
 
-            <div class="tekstblok breed">
+            <a href="#infrastructuur">
+                Infrastructuur
+            </a>
 
-                <p class="hoofdstuk">
-                    Hoofdstuk 2
-                </p>
+            <a href="#verschuiving">
+                Verschuiving
+            </a>
 
-                <h2>
-                    Talen als koloniale infrastructuur
-                </h2>
+            <a href="#verlies">
+                Verlies
+            </a>
 
-                <p>
-                    Talen verspreiden zich niet willekeurig.
-                    Vaak volgen ze routes van macht.
-                </p>
+            <a href="#kaart">
+                Kaart
+            </a>
 
-            </div>
+        </aside>
 
-        </section>
+        <main class="pagina">
 
-        <section class="visualisatie-layout" id="verschuiving">
+            <section class="verhaal" id="infrastructuur">
 
-            <div class="tekstblok">
+                <div class="tekstblok breed">
 
-                <h2>
-                    Traditioneel tegenover hedendaags
-                </h2>
+                    <p class="hoofdstuk">
+                        Hoofdstuk 2
+                    </p>
 
-                <p>
-                    Sommige talen zijn vandaag zichtbaar
-                    in veel grotere gebieden dan historisch het geval was.
-                </p>
+                    <h2>
+                        Talen als koloniale infrastructuur
+                    </h2>
 
-            </div>
+                    <p>
+                        Talen verspreiden zich niet willekeurig.
+                        Vaak volgen ze routes van macht.
+                    </p>
 
-            <div class="grafiek groot">
+                </div>
 
-                <div class="blok"
-                    id="koloniale talen: traditioneel vs hedendaags"></div>
+            </section>
 
-            </div>
+            <section class="visualisatie-layout" id="verschuiving">
 
-        </section>
+                <div class="tekstblok">
 
-        <section class="visualisatie-layout omgekeerd" id="verlies">
+                    <h2>
+                        Traditioneel tegenover hedendaags
+                    </h2>
 
-            <div class="grafiek groot">
+                    <p>
+                        Sommige talen zijn vandaag zichtbaar
+                        in veel grotere gebieden dan historisch het geval was.
+                    </p>
 
-                <div class="blok"
-                    id="koloniale talen: netto verandering"></div>
+                </div>
 
-            </div>
+                <div class="grafiek groot">
 
-            <div class="tekstblok">
+                    <div class="blok"
+                        id="koloniale talen: traditioneel vs hedendaags"></div>
 
-                <h2>
-                    Groei, verdringing en verlies
-                </h2>
+                </div>
 
-                <p>
-                    Sommige historische taalgebieden fragmenteren
-                    of verdwijnen uit administratieve kaarten.
-                </p>
+            </section>
 
-            </div>
+            <section class="visualisatie-layout omgekeerd" id="verlies">
 
-        </section>
+                <div class="grafiek groot">
 
-        <section class="volledig donkervlak" id="kaart">
+                    <div class="blok"
+                        id="koloniale talen: netto verandering"></div>
 
-            <div class="tekstblok breed gecentreerd licht">
+                </div>
 
-                <h2>
-                    Interactieve vergelijking van taalgebieden
-                </h2>
+                <div class="tekstblok">
 
-                <p>
-                    Kies een taal en vergelijk historische
-                    en hedendaagse verspreiding.
-                </p>
+                    <h2>
+                        Groei, verdringing en verlies
+                    </h2>
 
-            </div>
+                    <p>
+                        Sommige historische taalgebieden fragmenteren
+                        of verdwijnen uit administratieve kaarten.
+                    </p>
 
-            <div class="kaart-container">
+                </div>
 
-                <div class="blok kaart-groot"
-                    id="koloniale talen: kaart over tijd"></div>
+            </section>
 
-            </div>
+            <section class="volledig donkervlak" id="kaart">
 
-        </section>
+                <div class="tekstblok breed gecentreerd licht">
 
-    </main>
+                    <h2>
+                        Interactieve vergelijking van taalgebieden
+                    </h2>
+
+                    <p>
+                        Kies een taal en vergelijk historische
+                        en hedendaagse verspreiding.
+                    </p>
+
+                </div>
+
+                <div class="kaart-container">
+
+                    <div class="blok kaart-groot"
+                        id="koloniale talen: kaart over tijd"></div>
+
+                </div>
+
+            </section>
+
+        </main>
+        
+    </div>
 
     <script src="../js/main.js" type="module"></script>
 

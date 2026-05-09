@@ -113,37 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ☰
     </button>
 
-    <aside class="sidebar" id="sidebar">
-
-        <a href="#wereld">
-            Wereld
-        </a>
-
-        <a href="#structuur">
-            Structuur
-        </a>
-
-        <a href="#families-bar">
-            Families
-        </a>
-
-        <a href="#druk">
-            Bedreiging
-        </a>
-
-        <a href="#kaart">
-            Wereldkaart
-        </a>
-
-        <a href="#families-kaart">
-            Families op kaart
-        </a>
-
-        <a href="#continenten">
-            Continenten
-        </a>
-
-    </aside>
+    
 
     <header class="hero">
 
@@ -171,193 +141,229 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </header>
 
-    <main class="pagina">
+    <div class="layout">
 
-        <section class="verhaal" id="wereld">
+        <aside class="sidebar" id="sidebar">
 
-            <div class="tekstblok breed">
+            <a href="#wereld">
+                Wereld
+            </a>
 
-                <p class="hoofdstuk">
-                    Hoofdstuk 1
-                </p>
+            <a href="#structuur">
+                Structuur
+            </a>
 
-                <h2>
-                    Een wereld van duizenden talen
-                </h2>
+            <a href="#families-bar">
+                Families
+            </a>
 
-                <p>
-                    Elke taal vertelt een verhaal over migratie,
-                    handel, isolatie, conflict en culturele uitwisseling.
-                    Sommige talen ontwikkelden zich in dichtbevolkte rijken,
-                    terwijl andere ontstonden in berggebieden,
-                    regenwouden of eilandgroepen.
-                </p>
+            <a href="#druk">
+                Bedreiging
+            </a>
 
-                <p>
-                    De Glottolog-dataset verzamelt meer dan 8600 talen
-                    die ooit beschreven werden.
-                    Hoewel deze dataset nooit volledig kan zijn,
-                    laat ze wel toe om patronen zichtbaar te maken.
-                </p>
+            <a href="#kaart">
+                Wereldkaart
+            </a>
 
-            </div>
+            <a href="#families-kaart">
+                Families op kaart
+            </a>
 
-        </section>
+            <a href="#continenten">
+                Continenten
+            </a>
 
-        <section class="visualisatie-layout" id="structuur">
+        </aside>
 
-            <div class="tekstblok">
+        <main class="pagina">
 
-                <h2>
-                    De structuur van de talenwereld
-                </h2>
+            <section class="verhaal" id="wereld">
 
-                <p>
-                    Wanneer we talen groeperen per familie,
-                    ontstaat een opvallend patroon:
-                    een klein aantal families bevat enorm veel talen,
-                    terwijl honderden andere families slechts uit enkele talen bestaan.
-                </p>
+                <div class="tekstblok breed">
 
-            </div>
+                    <p class="hoofdstuk">
+                        Hoofdstuk 1
+                    </p>
 
-            <div class="grafiek groot">
-                <div class="blok"
-                    id="lijn van de verdeling van aantal talen per familie"></div>
-            </div>
+                    <h2>
+                        Een wereld van duizenden talen
+                    </h2>
 
-        </section>
+                    <p>
+                        Elke taal vertelt een verhaal over migratie,
+                        handel, isolatie, conflict en culturele uitwisseling.
+                        Sommige talen ontwikkelden zich in dichtbevolkte rijken,
+                        terwijl andere ontstonden in berggebieden,
+                        regenwouden of eilandgroepen.
+                    </p>
 
-        <section class="visualisatie-layout omgekeerd" id="families-bar">
+                    <p>
+                        De Glottolog-dataset verzamelt meer dan 8600 talen
+                        die ooit beschreven werden.
+                        Hoewel deze dataset nooit volledig kan zijn,
+                        laat ze wel toe om patronen zichtbaar te maken.
+                    </p>
 
-            <div class="grafiek">
-                <div class="blok"
-                    id="horizontale bar van aantal talen"></div>
-            </div>
+                </div>
 
-            <div class="tekstblok">
+            </section>
 
-                <h2>
-                    Dominante families en een lange staart
-                </h2>
+            <section class="visualisatie-layout" id="structuur">
 
-                <p>
-                    Achter de grootste taalfamilies schuilt een lange staart
-                    van kleinere groepen.
-                    Die fragmentatie vertelt iets over hoe gemeenschappen leefden:
-                    geïsoleerd in valleien,
-                    verspreid over eilanden
-                    of afgescheiden door natuurlijke barrières.
-                </p>
+                <div class="tekstblok">
 
-            </div>
+                    <h2>
+                        De structuur van de talenwereld
+                    </h2>
 
-        </section>
+                    <p>
+                        Wanneer we talen groeperen per familie,
+                        ontstaat een opvallend patroon:
+                        een klein aantal families bevat enorm veel talen,
+                        terwijl honderden andere families slechts uit enkele talen bestaan.
+                    </p>
 
-        <section class="visualisatie-layout" id="druk">
+                </div>
 
-            <div class="tekstblok">
+                <div class="grafiek groot">
+                    <div class="blok"
+                        id="lijn van de verdeling van aantal talen per familie"></div>
+                </div>
 
-                <h2>
-                    Talen onder druk
-                </h2>
+            </section>
 
-                <p>
-                    Niet elke taal overleeft de geschiedenis.
-                    Sommige verdwijnen geleidelijk doordat sprekers
-                    overstappen naar dominante talen.
-                </p>
+            <section class="visualisatie-layout omgekeerd" id="families-bar">
 
-            </div>
+                <div class="grafiek">
+                    <div class="blok"
+                        id="horizontale bar van aantal talen"></div>
+                </div>
 
-            <div class="grafiek">
-                <div class="blok"
-                    id="bol van hoeveelheid uitgestorven talen"></div>
-            </div>
+                <div class="tekstblok">
 
-        </section>
+                    <h2>
+                        Dominante families en een lange staart
+                    </h2>
 
-        <section class="volledig" id="kaart">
+                    <p>
+                        Achter de grootste taalfamilies schuilt een lange staart
+                        van kleinere groepen.
+                        Die fragmentatie vertelt iets over hoe gemeenschappen leefden:
+                        geïsoleerd in valleien,
+                        verspreid over eilanden
+                        of afgescheiden door natuurlijke barrières.
+                    </p>
 
-            <div class="tekstblok breed gecentreerd">
+                </div>
 
-                <h2>
-                    Waar talen ontstaan en verdwijnen
-                </h2>
+            </section>
 
-                <p>
-                    Op wereldschaal worden historische patronen zichtbaar.
-                    Grote concentraties talen verschijnen in gebieden
-                    met geografische fragmentatie.
-                </p>
+            <section class="visualisatie-layout" id="druk">
 
-            </div>
+                <div class="tekstblok">
 
-            <div class="kaart-container">
+                    <h2>
+                        Talen onder druk
+                    </h2>
 
-                <div class="blok kaart-groot"
-                    id="kaart met puntjes van de talen"></div>
+                    <p>
+                        Niet elke taal overleeft de geschiedenis.
+                        Sommige verdwijnen geleidelijk doordat sprekers
+                        overstappen naar dominante talen.
+                    </p>
 
-            </div>
+                </div>
 
-        </section>
+                <div class="grafiek">
+                    <div class="blok"
+                        id="bol van hoeveelheid uitgestorven talen"></div>
+                </div>
 
-        <section class="visualisatie-layout omgekeerd" id="families-kaart">
+            </section>
 
-            <div class="grafiek groot">
+            <section class="volledig" id="kaart">
 
-                <div class="blok"
-                    id="kaart met puntjes van de talen per familie"></div>
+                <div class="tekstblok breed gecentreerd">
 
-            </div>
+                    <h2>
+                        Waar talen ontstaan en verdwijnen
+                    </h2>
 
-            <div class="tekstblok">
+                    <p>
+                        Op wereldschaal worden historische patronen zichtbaar.
+                        Grote concentraties talen verschijnen in gebieden
+                        met geografische fragmentatie.
+                    </p>
 
-                <h2>
-                    Taalfamilies verspreid over de aarde
-                </h2>
+                </div>
 
-                <p>
-                    Door individuele taalfamilies te selecteren,
-                    kunnen we zien hoe historische migratiepatronen
-                    zich geografisch verspreidden.
-                </p>
+                <div class="kaart-container">
 
-                <label for="selecteer familie">
-                    Kies een taalfamilie
-                </label>
+                    <div class="blok kaart-groot"
+                        id="kaart met puntjes van de talen"></div>
 
-                <select id="selecteer familie"></select>
+                </div>
 
-            </div>
+            </section>
 
-        </section>
+            <section class="visualisatie-layout omgekeerd" id="families-kaart">
 
-        <section class="visualisatie-layout" id="continenten">
+                <div class="grafiek groot">
 
-            <div class="tekstblok">
+                    <div class="blok"
+                        id="kaart met puntjes van de talen per familie"></div>
 
-                <h2>
-                    Continenten en taalverlies
-                </h2>
+                </div>
 
-                <p>
-                    Vooral in Amerika en Australië
-                    is het aandeel verdwenen talen opvallend hoog.
-                </p>
+                <div class="tekstblok">
 
-            </div>
+                    <h2>
+                        Taalfamilies verspreid over de aarde
+                    </h2>
 
-            <div class="grafiek">
+                    <p>
+                        Door individuele taalfamilies te selecteren,
+                        kunnen we zien hoe historische migratiepatronen
+                        zich geografisch verspreidden.
+                    </p>
 
-                <div class="blok"
-                    id="bedreigdheid per continent"></div>
+                    <label for="selecteer familie">
+                        Kies een taalfamilie
+                    </label>
 
-            </div>
+                    <select id="selecteer familie"></select>
 
-        </section>
+                </div>
 
-    </main>
+            </section>
+
+            <section class="visualisatie-layout" id="continenten">
+
+                <div class="tekstblok">
+
+                    <h2>
+                        Continenten en taalverlies
+                    </h2>
+
+                    <p>
+                        Vooral in Amerika en Australië
+                        is het aandeel verdwenen talen opvallend hoog.
+                    </p>
+
+                </div>
+
+                <div class="grafiek">
+
+                    <div class="blok"
+                        id="bedreigdheid per continent"></div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
 
     <script src="../js/main.js" type="module"></script>
 

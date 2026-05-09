@@ -238,10 +238,9 @@ p {
 /* PAGINA */
 
 .pagina {
-
-    width: min(1220px, 94vw);
-
-    margin: 0 auto;
+    flex: 1;
+    min-width: 0;
+    padding: 0 4vw;
 }
 
 /* LAYOUT */
@@ -383,15 +382,24 @@ select {
 /* DONKER VLAK */
 
 .donkervlak {
-
-    width: 100vw;
-
-    margin-left: calc(50% - 50vw);
-
+    width: calc(100% + 8vw);
+    margin-left: -4vw;
+    margin-right: -4vw;
+    max-width: none;
     background: #171717;
+    padding: 100px 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
 
-    padding:
-        100px 4vw;
+.donkervlak .tekstblok {
+    width: 100%;
+    text-align: center;
+}
+
+.donkervlak .kaart-container {
+    width: 100%;
 }
 
 .licht h2,
@@ -463,15 +471,17 @@ select {
 
 .sidebar {
 
-    position: fixed;
+    position: sticky;
 
     top: 74px;
+
+	align-self: flex-start;
 
     left: 0;
 
     width: 240px;
 
-    height: calc(100vh - 74px);
+	height: calc(100vh - 74px);
 
     background:
         linear-gradient(
@@ -539,22 +549,14 @@ select {
         0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* PAGE SHIFT */
-
-.pagina {
-
-    width: min(1100px, 92vw);
-
-    margin-left: 280px;
-}
-
 /* HERO SHIFT */
 
 .hero-content {
 
     width: min(840px, 100%);
 
-    margin-left: 280px;
+    margin: 0 auto;
+
 }
 
 /* TOGGLE BUTTON */
@@ -624,10 +626,13 @@ select {
     }
 
     .pagina {
+        padding: 0 5vw;
+    }
 
-        width: min(1220px, 94vw);
-
-        margin-left: auto;
+    .donkervlak {
+        width: calc(100% + 10vw);
+        margin-left: -5vw;
+        margin-right: -5vw;
     }
 
     .hero-content {
@@ -639,8 +644,6 @@ select {
 /* FOOTER */
 
 .footer {
-
-    margin-top: 80px;
 
     background:
         rgba(28, 36, 43, 0.96);
@@ -681,4 +684,9 @@ select {
     font-size: 0.92rem;
 
     line-height: 1.6;
+}
+
+.layout {
+    display: flex;
+    align-items: stretch;
 }
