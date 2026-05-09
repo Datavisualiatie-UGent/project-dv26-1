@@ -1,7 +1,5 @@
 import "./d3.v7.js";
 
-const BASE_PATH = "/data/";
-
 let cache = null;
 
 export const COLONIAL_LANGUAGES = [
@@ -46,8 +44,8 @@ export async function loadAsherColonialData() {
     if (cache) return cache;
 
     const [traditionalGeo, contemporaryGeo] = await Promise.all([
-        d3.json(`${BASE_PATH}/traditional/languages.geojson`),
-        d3.json(`${BASE_PATH}/contemporary/languages.geojson`)
+        d3.json(new URL("../data/traditional/languages.geojson", import.meta.url)),
+        d3.json(new URL("../data/contemporary/languages.geojson", import.meta.url))
     ]);
 
     const areaTraditional = sumAreaByCode(traditionalGeo.features ?? []);

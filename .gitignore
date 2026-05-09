@@ -1,5 +1,6 @@
 data/asher2007world-v2.0
 *.geojson
+dist/*
 
 data/contemporary/*
 data/traditional/*
