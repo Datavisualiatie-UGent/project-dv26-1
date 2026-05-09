@@ -36,3 +36,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+      - name: Show Pages URL and quick status
+        run: |
+          echo "Pages URL: ${{ steps.deployment.outputs.page_url }}"
+          # quick check, may fail if Pages not yet propagated
+          curl -I "${{ steps.deployment.outputs.page_url }}" || true
