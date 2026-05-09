@@ -602,9 +602,9 @@ select {
 
     .sidebar {
 
-        top: 74px;
+        top: 120px;
 
-        height: calc(100vh - 74px);
+        height: calc(100vh - 120px);
 
         transform: translateX(-100%);
 
