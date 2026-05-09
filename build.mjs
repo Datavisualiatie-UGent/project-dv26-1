@@ -18,6 +18,6 @@ const distHtml = sourceHtml.replace("../js/main.js", "./js/main.js");
 writeFileSync(join(dist, "index.html"), distHtml);
 copyRecursive(join(root, "src/webpagina/stijl.css"), join(dist, "stijl.css"));
 copyRecursive(join(root, "src/js"), join(dist, "js"));
-copyRecursive(join(root, "data"), join(dist, "data"));
+copyRecursive(join(root, "src/data"), join(dist, "data"));
 // Prevent GitHub Pages from using Jekyll processing which can hide files/folders
 writeFileSync(join(dist, ".nojekyll"), "");
