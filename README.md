@@ -14,7 +14,24 @@ This dataset describes languages areas as they are in more recent/modern times.
 
 language areas at “time of contact”, i.e. before major colonial-era displacement.
 
+### Language families
+
+This dataset describes the hierarchical classification of languages into families, based on shared linguistic features and historical relationships. It includes information on language family names, the number of languages within each family, and their geographic distribution.
+
+## Local Project Setup
+
+> Node or Nodejs is required to run the project. You can download it from [Nodejs.org](https://nodejs.org/).
+
+Simply run the shell script from project root:
+
+```bash
+./uitvoeren.sh
+```
+
+This will build the project and download the necessary datasets if necessary. Afterwards the project will be available at `http://localhost:3000/`.
+
 ## Referenties
 
 - Asher, R. E. & Christopher J. Moseley (eds.) 2007. Atlas of the World's Languages. 2nd edn. Routledge.
 - The Glottography Consortium. (2026). Glottography dataset derived from Asher and Moseley 2007 "Atlas of the World's Languages" (v2.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18613195
+- 
