@@ -3,7 +3,6 @@ import { data } from "../../data.js";
 
 const id = "horizontale bar van aantal talen";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 const grafiek = d3.select(element).append("table").style("width", "100%").selectAll();
 
 const bar_stijl = document.createElement("style");

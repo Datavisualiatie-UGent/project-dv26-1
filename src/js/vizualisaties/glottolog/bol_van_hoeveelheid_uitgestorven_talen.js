@@ -7,11 +7,10 @@ import { data } from "../../data.js";
 
 const id = "bol van hoeveelheid uitgestorven talen";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 const graph = d3.select(element);
 
-const width = element.clientWidth || 800;
-const height = element.clientHeight || 600;
+const width = 800;
+const height = 600;
 
 const bedreigdheidsnamen = {
     "not endangered":1,

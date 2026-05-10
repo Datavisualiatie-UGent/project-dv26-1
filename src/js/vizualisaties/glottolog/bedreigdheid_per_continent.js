@@ -3,7 +3,6 @@ import { data } from "../../data.js";
 
 const id = "bedreigdheid per continent";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 const graph = d3.select(element);
 
 const container = graph
@@ -155,7 +154,7 @@ const legenda = container.append("div")
     .style("gap", "8px 16px")
     .style("margin-top", "18px")
     .style("padding-top", "8px");
-    
+
 legenda.selectAll("div")
     .data(bedreigdheidsnamen.slice(0, -1))
     .enter()

@@ -3,7 +3,6 @@ import { loadAsherColonialData } from "../asher_data.js";
 
 const id = "koloniale talen: kaart over tijd";
 const element = document.querySelector(".kaart-container:has(#kaart-wrapper)");
-if (!element) console.error(`element ${id} niet gevonden`);
 
 function buildLanguageOptions(dataByDataset) {
     const areasTraditional = {};

@@ -4,10 +4,9 @@ import { data } from "../../data.js";
 
 const id = "kaart met puntjes van de talen";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 
-const width = element.clientWidth || 800;
-const height = element.clientHeight || 400;
+const width = 800;
+const height = 400;
 
 const svg = d3.select(element).append("svg").style("width", width+200).style("height", height)
 

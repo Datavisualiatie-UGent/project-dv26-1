@@ -3,7 +3,6 @@ import { data } from "../../data.js";
 
 const id = "lijn van de verdeling van aantal talen per familie";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 const graph = d3.select(element);
 
 const familie_telling = Object.entries(
@@ -15,8 +14,8 @@ const familie_telling = Object.entries(
     .sort((a, b) => b[1] - a[1]);
 
 const rand = { boven: 10, beneden: 30, links: 60, rechts: 10 },
-    hoogte = element.clientHeight || 600,
-    breedte = element.clientWidth || 900;
+    hoogte = 500,
+    breedte = 900;
 
 const tekening = graph
     .append("svg")

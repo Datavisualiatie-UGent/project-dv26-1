@@ -3,14 +3,12 @@ import { loadAsherColonialData } from "../asher_data.js";
 
 const id = "koloniale talen: traditioneel vs hedendaags";
 const element = document.getElementById(id);
-if (!element) console.error(`element ${id} niet gevonden`);
 
 const idDelta = "koloniale talen: netto verandering";
 const elementDelta = document.getElementById(idDelta);
-if (!elementDelta) console.error(`element ${idDelta} niet gevonden`);
 
-const WIDTH = element.clientWidth || 860;
-const HEIGHT = element.clientHeight || 340;
+const WIDTH = 860;
+const HEIGHT = 450;
 const MARGIN_BAR   = { top: 36, right: 46,  bottom: 56, left: 78 };
 const MARGIN_DELTA = { top: 36, right: 68,  bottom: 56, left: 78 };
 
