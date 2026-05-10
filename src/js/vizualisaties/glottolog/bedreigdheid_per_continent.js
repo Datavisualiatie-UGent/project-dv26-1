@@ -32,10 +32,7 @@ const nederlandseNamen = {
     "NA": "onbekend"
 };
 
-const kleur = d3
-    .scaleOrdinal()
-    .domain(bedreigdheidsnamen)
-    .range(d3.schemeTableau10)
+const kleur = d3.scaleOrdinal(bedreigdheidsnamen, d3.quantize(d3.interpolateViridis, bedreigdheidsnamen.length))
 
 const clean_data = data
     .filter(d => d["macroarea"] != "NA")

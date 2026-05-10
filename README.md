@@ -40,4 +40,3 @@ This will build the project and download the necessary datasets if necessary. Af
 - Glottolog dataset, sourced from https://github.com/rfordatascience/tidytuesday/tree/main/data/2025/2025-12-23
 - Asher, R. E. & Christopher J. Moseley (eds.) 2007. Atlas of the World's Languages. 2nd edn. Routledge.
 - The Glottography Consortium. (2026). Glottography dataset derived from Asher and Moseley 2007 "Atlas of the World's Languages" (v2.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18613195
-- 

@@ -39,10 +39,9 @@ const svg = graph
     .attr("height", height)
     .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
-const kleur = d3
-    .scaleOrdinal()
-    .domain(bedreigdheden.map(d => d[1]))
-    .range(d3.schemeTableau10);
+
+const hihi = bedreigdheden.map(d => d[1])
+const kleur = d3.scaleOrdinal(hihi, d3.quantize(d3.interpolateViridis, hihi.length))
 
 const tooltip = graph
     .append("div")
