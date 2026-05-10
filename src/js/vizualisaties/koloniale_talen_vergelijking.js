@@ -9,8 +9,8 @@ const idDelta = "koloniale talen: netto verandering";
 const elementDelta = document.getElementById(idDelta);
 if (!elementDelta) console.error(`element ${idDelta} niet gevonden`);
 
-const WIDTH = 860;
-const HEIGHT = 340;
+const WIDTH = element.clientWidth || 860;
+const HEIGHT = element.clientHeight || 340;
 const MARGIN = { top: 36, right: 26, bottom: 56, left: 78 };
 
 function formatPct(value) {

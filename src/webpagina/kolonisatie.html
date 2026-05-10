@@ -245,8 +245,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="kaart-container">
 
-                    <div class="blok kaart-groot"
-                        id="koloniale talen: kaart over tijd"></div>
+                    <div class="kaart-controls">
+
+                        <label class="kaart-zoek-label">
+                            Taal (zoek op naam of code):
+                            <input type="search" id="kaart-taal-input"
+                                class="kaart-zoek-input" list="taal-zoeklijst">
+                        </label>
+
+                        <datalist id="taal-zoeklijst"></datalist>
+
+                        <span class="kaart-dataset-label">Dataset:</span>
+
+                        <button type="button" id="toggle-traditional"
+                            class="kaart-btn active">Traditioneel</button>
+
+                        <button type="button" id="toggle-contemporary"
+                            class="kaart-btn">Hedendaags</button>
+
+                        <button type="button" id="zoom-reset"
+                            class="kaart-btn">Reset zoom</button>
+
+                    </div>
+
+                    <div class="kaart-wrapper" id="kaart-wrapper"></div>
 
                 </div>
 

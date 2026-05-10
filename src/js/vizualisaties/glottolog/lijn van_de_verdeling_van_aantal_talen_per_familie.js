@@ -15,8 +15,8 @@ const familie_telling = Object.entries(
     .sort((a, b) => b[1] - a[1]);
 
 const rand = { boven: 10, beneden: 30, links: 60, rechts: 10 },
-    hoogte = 600,
-    breedte = 800;
+    hoogte = element.clientHeight || 600,
+    breedte = element.clientWidth || 800;
 
 const tekening = graph
     .append("svg")

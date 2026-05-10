@@ -10,8 +10,8 @@ const element = document.getElementById(id);
 if (!element) console.error(`element ${id} niet gevonden`);
 const graph = d3.select(element);
 
-const width = 800;
-const height = 600;
+const width = element.clientWidth || 800;
+const height = element.clientHeight || 600;
 
 const bedreigdheidsnamen = {
     "not endangered":1,
