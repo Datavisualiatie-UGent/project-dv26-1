@@ -79,8 +79,8 @@ tekening.append("g")
 
 tekening.append("text")
     .attr("transform", `rotate(-90) translate(-${hoogte/3*2},15)`)
-    .text("number of languages in family")
+    .text("Aantal talen in de familie");
 
 tekening.append("text")
     .attr("transform", `translate(${breedte/2},${hoogte-3})`)
-    .text("language families sorted by size")
+    .text("Taalfamilies, gesorteerd op grootte");
