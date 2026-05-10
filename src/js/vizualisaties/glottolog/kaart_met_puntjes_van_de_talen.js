@@ -5,10 +5,23 @@ import { data } from "../../data.js";
 const id = "kaart met puntjes van de talen";
 const element = document.getElementById(id);
 
-const width = 800;
-const height = 400;
+const width = 1500;
+const height = 700;
 
-const svg = d3.select(element).append("svg").style("width", width+200).style("height", height)
+const svg = d3.select(element).append("svg").style("width", "100%").style("height", height)
+
+const tooltip = d3.select(element)
+    .append("div")
+    .style("position", "fixed")
+    .style("pointer-events", "none")
+    .style("opacity", 0)
+    .style("z-index", 2200)
+    .style("padding", "8px 10px")
+    .style("background", "rgba(20, 20, 20, 0.92)")
+    .style("color", "#fff")
+    .style("border-radius", "8px")
+    .style("font-size", "12px")
+    .style("line-height", "1.35");
 
 const projection = d3.geoMercator()
     .scale(120)
@@ -16,15 +29,27 @@ const projection = d3.geoMercator()
 
 const namen = ["not endangered", "threatened", "shifting", "moribund", "nearly extinct", "extinct", "NA"];
 
+const vertalingen = {
+    "not endangered": "Niet bedreigd",
+    "threatened":     "Bedreigd",
+    "shifting":       "In verschuiving",
+    "moribund":       "Stervend",
+    "nearly extinct": "Bijna uitgestorven",
+    "extinct":        "Uitgestorven",
+    "NA":             "Onbekend"
+};
+
 const kleur = d3
     .scaleOrdinal()
     .domain(namen)
     .range(d3.schemeTableau10)
 
 let puntjes = data.map(d => ({
-    x: projection([d["longitude"], d["latitude"]])[0],
-    y: projection([d["longitude"], d["latitude"]])[1],
-    kleur: d["status_label"] == "NA"? "gray": kleur(d["status_label"])
+    x:      projection([d["longitude"], d["latitude"]])[0],
+    y:      projection([d["longitude"], d["latitude"]])[1],
+    kleur:  d["status_label"] === "NA" ? "gray" : kleur(d["status_label"]),
+    naam:   d["name"] ?? d["title"] ?? "Onbekend",
+    status: vertalingen[d["status_label"]] ?? d["status_label"]
 }));
 
 const min_x = puntjes.reduce((min,p)=>Math.min(min,p.x),1000);
@@ -63,44 +88,62 @@ svg.selectAll()
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("r", 1)
-    .attr("fill", d => d.kleur);
+    .attr("fill", d => d.kleur)
+    .style("cursor", "pointer")       // 👈 add from here
+    .on("mouseenter", (event, d) => {
+        tooltip
+            .style("opacity", 1)
+            .html(`
+                <strong>${d.naam}</strong><br>
+                ${d.status}
+            `)
+            .style("left", `${event.clientX + 12}px`)
+            .style("top",  `${event.clientY - 12}px`);
+    })
+    .on("mousemove", event => {
+        tooltip
+            .style("left", `${event.clientX + 12}px`)
+            .style("top",  `${event.clientY - 12}px`);
+    })
+    .on("mouseleave", () => {
+        tooltip.style("opacity", 0);
+    });
+
+const legendeHoogte = 20 + namen.length * 20 + 10;
+const legendeBreedte = 190;
+const legendeX = 10;
+const legendeY = height - legendeHoogte - 10;
 
 const legende = svg.append("g")
+    .attr("transform", `translate(${legendeX}, ${legendeY})`);
 
 legende.append("rect")
-    .attr("x", width)
-    .attr("y", height-150)
-    .attr("width", 200)
-    .attr("height", 150)
+    .attr("width", legendeBreedte)
+    .attr("height", legendeHoogte)
     .attr("rx", 10)
-    .attr("fill", "darkgrey")
+    .attr("fill", "white")
+    .attr("opacity", 0.92);
 
 legende
-    .append("rect")
-    .attr("x", width+10)
-    .attr("y", height-150+10+3)
-    .attr("width", 200-20)
-    .attr("height", 150-20-3)
-    .attr("rx", 10)
-    .attr("fill", "white");
-
-legende
-    .selectAll()
+    .selectAll(".legende-tekst")
     .data(namen)
     .enter()
     .append("text")
-    .attr("x", width+10)
-    .attr("y", d => height-150+25+18*namen.indexOf(d)+2)
-    .text(d => d)
+    .attr("class", "legende-tekst")
+    .attr("x", 10)
+    .attr("y", (_, i) => 25 + i * 20)
+    .style("font-size", "13px")
+    .text(d => vertalingen[d] ?? d);
 
 legende
-    .selectAll()
+    .selectAll(".legende-kleur")
     .data(namen)
     .enter()
     .append("rect")
-    .attr("x", width+200-10-18)
-    .attr("rx", 5)
-    .attr("y", d => height-150+10+18*namen.indexOf(d)+4)
-    .attr("width", 18-1)
-    .attr("height", 18-1)
-    .attr("fill", d => d == "NA"? "darkgrey": kleur(d))
+    .attr("class", "legende-kleur")
+    .attr("x", legendeBreedte - 10 - 14)
+    .attr("y", (_, i) => 13 + i * 20)
+    .attr("width", 14)
+    .attr("height", 14)
+    .attr("rx", 4)
+    .attr("fill", d => d === "NA" ? "darkgrey" : kleur(d));

@@ -5,7 +5,7 @@ const id = "kaart met puntjes van de talen per familie";
 const element = document.getElementById(id);
 
 const width = 900;
-const height = 400;
+const height = 600;
 
 const svg = d3
     .select(element)
