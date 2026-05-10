@@ -16,12 +16,25 @@ const familie_telling = Object.entries(
 
 const rand = { boven: 10, beneden: 30, links: 60, rechts: 10 },
     hoogte = element.clientHeight || 600,
-    breedte = element.clientWidth || 800;
+    breedte = element.clientWidth || 900;
 
 const tekening = graph
     .append("svg")
     .attr("width", breedte)
     .attr("height", hoogte)
+
+const tooltip = graph
+    .append("div")
+    .style("position", "fixed")
+    .style("pointer-events", "none")
+    .style("opacity", 0)
+    .style("z-index", 2000)
+    .style("padding", "8px 10px")
+    .style("background", "rgba(20, 20, 20, 0.92)")
+    .style("color", "#fff")
+    .style("border-radius", "8px")
+    .style("font-size", "12px")
+    .style("line-height", "1.35");
 
 const x_as = d3.scaleBand()
     .domain(d3.range(familie_telling.length))
@@ -41,7 +54,25 @@ tekening.selectAll("rect")
     .attr("width", x_as.bandwidth())
     .attr("height", d => hoogte - y_as(d[1]) - rand.beneden + 1)
     .attr("transform", `translate(${rand.links}, ${rand.boven})`)
-    .attr("fill", "steelblue");
+    .attr("fill", "steelblue")
+    .style("cursor", "pointer")
+    .on("mouseenter", function(event, d) {
+        d3.select(this).attr("fill", "#2a5f8f");
+        tooltip
+            .style("opacity", 1)
+            .html(`<strong>${d[0] || "Unknown family"}</strong><br>${d[1]} talen`)
+            .style("left", `${event.clientX + 14}px`)
+            .style("top", `${event.clientY - 12}px`);
+    })
+    .on("mousemove", function(event) {
+        tooltip
+            .style("left", `${event.clientX + 14}px`)
+            .style("top", `${event.clientY - 12}px`);
+    })
+    .on("mouseleave", function() {
+        d3.select(this).attr("fill", "steelblue");
+        tooltip.style("opacity", 0);
+    });
 
 tekening.append("g")
     .attr("transform", `translate(${rand.links}, ${rand.boven})`)

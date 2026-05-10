@@ -11,7 +11,7 @@ if (!elementDelta) console.error(`element ${idDelta} niet gevonden`);
 
 const WIDTH = element.clientWidth || 860;
 const HEIGHT = element.clientHeight || 340;
-const MARGIN_BAR   = { top: 36, right: 26,  bottom: 56, left: 78 };
+const MARGIN_BAR   = { top: 36, right: 46,  bottom: 56, left: 78 };
 const MARGIN_DELTA = { top: 36, right: 68,  bottom: 56, left: 78 };
 
 function formatPct(value) {
@@ -49,7 +49,7 @@ function renderComparativeBars(container, rows) {
         .attr("x", MARGIN_BAR.left)
         .attr("y", 20)
         .attr("font-weight", "bold")
-        .text("Totale polygon-oppervlakte per taal (sferische eenheid)");
+        .text("Totale oppervlakte per taal (sferische eenheid)");
 
     const groups = svg.append("g")
         .selectAll("g")
@@ -77,7 +77,7 @@ function renderComparativeBars(container, rows) {
         .text(d => `Hedendaags: ${d3.format(".4f")(d.contemporaryArea)}`);
 
     const legend = svg.append("g")
-        .attr("transform", `translate(${MARGIN_BAR.left + 10}, ${MARGIN_BAR.top})`);
+        .attr("transform", `translate(${WIDTH - 350}, ${MARGIN_BAR.top})`);
 
     legend.append("rect")
         .attr("width", 12).attr("height", 12)
