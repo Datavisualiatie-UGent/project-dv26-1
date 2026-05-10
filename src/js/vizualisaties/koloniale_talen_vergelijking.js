@@ -11,7 +11,8 @@ if (!elementDelta) console.error(`element ${idDelta} niet gevonden`);
 
 const WIDTH = element.clientWidth || 860;
 const HEIGHT = element.clientHeight || 340;
-const MARGIN = { top: 36, right: 26, bottom: 56, left: 78 };
+const MARGIN_BAR   = { top: 36, right: 26,  bottom: 56, left: 78 };
+const MARGIN_DELTA = { top: 36, right: 68,  bottom: 56, left: 78 };
 
 function formatPct(value) {
     return `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
@@ -25,27 +26,27 @@ function renderComparativeBars(container, rows) {
 
     const x = d3.scaleBand()
         .domain(rows.map(d => d.name))
-        .range([MARGIN.left, WIDTH - MARGIN.right])
+        .range([MARGIN_BAR.left, WIDTH - MARGIN_BAR.right])
         .padding(0.2);
 
     const y = d3.scaleLinear()
         .domain([0, d3.max(rows, d => Math.max(d.traditionalArea, d.contemporaryArea)) * 1.08])
         .nice()
-        .range([HEIGHT - MARGIN.bottom, MARGIN.top]);
+        .range([HEIGHT - MARGIN_BAR.bottom, MARGIN_BAR.top]);
 
     const pairWidth = x.bandwidth();
-    const barWidth = pairWidth / 2 - 4;
+    const barWidth  = pairWidth / 2 - 4;
 
     svg.append("g")
-        .attr("transform", `translate(0,${HEIGHT - MARGIN.bottom})`)
+        .attr("transform", `translate(0,${HEIGHT - MARGIN_BAR.bottom})`)
         .call(d3.axisBottom(x));
 
     svg.append("g")
-        .attr("transform", `translate(${MARGIN.left},0)`)
+        .attr("transform", `translate(${MARGIN_BAR.left},0)`)
         .call(d3.axisLeft(y).ticks(6).tickFormat(v => d3.format(".2f")(v)));
 
     svg.append("text")
-        .attr("x", MARGIN.left)
+        .attr("x", MARGIN_BAR.left)
         .attr("y", 20)
         .attr("font-weight", "bold")
         .text("Totale polygon-oppervlakte per taal (sferische eenheid)");
@@ -76,31 +77,24 @@ function renderComparativeBars(container, rows) {
         .text(d => `Hedendaags: ${d3.format(".4f")(d.contemporaryArea)}`);
 
     const legend = svg.append("g")
-        .attr("transform", `translate(${WIDTH - 250},${MARGIN.top})`);
+        .attr("transform", `translate(${MARGIN_BAR.left + 10}, ${MARGIN_BAR.top})`);
 
     legend.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 12)
-        .attr("height", 12)
+        .attr("width", 12).attr("height", 12)
         .attr("fill", "#70543e");
 
     legend.append("text")
-        .attr("x", 18)
-        .attr("y", 10)
-        .text("Traditional / time-of-contact");
+        .attr("x", 18).attr("y", 10)
+        .text("Traditioneel / tijdstip van contact");
 
     legend.append("rect")
-        .attr("x", 0)
-        .attr("y", 20)
-        .attr("width", 12)
-        .attr("height", 12)
+        .attr("x", 0).attr("y", 20)
+        .attr("width", 12).attr("height", 12)
         .attr("fill", "#2f7d4f");
 
     legend.append("text")
-        .attr("x", 18)
-        .attr("y", 30)
-        .text("Contemporary");
+        .attr("x", 18).attr("y", 30)
+        .text("Hedendaags");
 }
 
 function renderDeltaBars(container, rows) {
@@ -114,34 +108,32 @@ function renderDeltaBars(container, rows) {
     const x = d3.scaleLinear()
         .domain(d3.extent(sorted, d => d.deltaPct))
         .nice()
-        .range([MARGIN.left, WIDTH - MARGIN.right]);
+        .range([MARGIN_DELTA.left, WIDTH - MARGIN_DELTA.right]);
 
     const y = d3.scaleBand()
         .domain(sorted.map(d => d.name))
-        .range([MARGIN.top, HEIGHT - MARGIN.bottom])
+        .range([MARGIN_DELTA.top, HEIGHT - MARGIN_DELTA.bottom])
         .padding(0.22);
 
     svg.append("g")
-        .attr("transform", `translate(0,${HEIGHT - MARGIN.bottom})`)
+        .attr("transform", `translate(0,${HEIGHT - MARGIN_DELTA.bottom})`)
         .call(d3.axisBottom(x).ticks(8).tickFormat(v => `${v}%`));
 
     svg.append("g")
-        .attr("transform", `translate(${MARGIN.left},0)`)
+        .attr("transform", `translate(${MARGIN_DELTA.left},0)`)
         .call(d3.axisLeft(y));
 
     svg.append("line")
-        .attr("x1", x(0))
-        .attr("x2", x(0))
-        .attr("y1", MARGIN.top)
-        .attr("y2", HEIGHT - MARGIN.bottom)
+        .attr("x1", x(0)).attr("x2", x(0))
+        .attr("y1", MARGIN_DELTA.top).attr("y2", HEIGHT - MARGIN_DELTA.bottom)
         .attr("stroke", "#222")
         .attr("stroke-dasharray", "4 3");
 
     svg.append("text")
-        .attr("x", MARGIN.left)
+        .attr("x", MARGIN_DELTA.left)
         .attr("y", 20)
         .attr("font-weight", "bold")
-        .text("Netto verandering van areaal (contemporary minus traditional)");
+        .text("Netto verandering van oppervlakte (hedendaags t.o.v. traditioneel)"); 
 
     svg.append("g")
         .selectAll("rect")
@@ -150,7 +142,7 @@ function renderDeltaBars(container, rows) {
         .append("rect")
         .attr("x", d => Math.min(x(0), x(d.deltaPct)))
         .attr("y", d => y(d.name))
-        .attr("width", d => Math.abs(x(d.deltaPct) - x(0)))
+        .attr("width",  d => Math.abs(x(d.deltaPct) - x(0)))
         .attr("height", y.bandwidth())
         .attr("fill", d => d.deltaPct >= 0 ? "#2f7d4f" : "#b5473c")
         .append("title")
@@ -161,7 +153,9 @@ function renderDeltaBars(container, rows) {
         .data(sorted)
         .enter()
         .append("text")
-        .attr("x", d => d.deltaPct >= 0 ? x(d.deltaPct) + 6 : x(d.deltaPct) - 6)
+        .attr("x", d => d.deltaPct >= 0
+            ? Math.min(x(d.deltaPct) + 6, WIDTH - MARGIN_DELTA.right - 2) 
+            : Math.max(x(d.deltaPct) - 6, MARGIN_DELTA.left + 2))          
         .attr("y", d => y(d.name) + y.bandwidth() / 2 + 4)
         .attr("text-anchor", d => d.deltaPct >= 0 ? "start" : "end")
         .style("font-size", "12px")
@@ -172,8 +166,9 @@ async function start() {
     if (!element || !elementDelta) return;
 
     const { colonialRows } = await loadAsherColonialData();
-    renderComparativeBars(element, colonialRows);
-    renderDeltaBars(elementDelta, colonialRows);
+    const filtered = colonialRows.filter(d => d.name !== "Russian");
+    renderComparativeBars(element, filtered);
+    renderDeltaBars(elementDelta, filtered);
 }
 
 start();

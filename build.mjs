@@ -12,13 +12,7 @@ function copyRecursive(source, target) {
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 
-const sourceHtml = readFileSync(join(root, "src/webpagina/index.html"), "utf8");
-const distHtml = sourceHtml.replace("../js/main.js", "./js/main.js");
-const kolonisatieHtml = readFileSync(join(root, "src/webpagina/kolonisatie.html"), "utf8");
-const distKolonisatieHtml = kolonisatieHtml.replace("../js/main.js", "./js/main.js");
-
-writeFileSync(join(dist, "index.html"), distHtml);
-writeFileSync(join(dist, "kolonisatie.html"), distKolonisatieHtml);
+copyRecursive(join(root, "src/webpagina/"), dist);
 copyRecursive(join(root, "src/webpagina/stijl.css"), join(dist, "stijl.css"));
 copyRecursive(join(root, "src/js"), join(dist, "js"));
 copyRecursive(join(root, "data"), join(dist, "data"));

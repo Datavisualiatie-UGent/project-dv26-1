@@ -206,7 +206,7 @@ async function start() {
 
     svg.call(zoom);
 
-    let dataset = "traditional";
+    let dataset = "contemporary";
     let currentTransform = d3.zoomIdentity;
 
     // CSS class toggle instead of inline style manipulation

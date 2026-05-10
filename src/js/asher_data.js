@@ -1,6 +1,34 @@
 import "./d3.v7.js";
 
-let cache = null;
+const IDB_NAME    = "talen-cache";
+const IDB_STORE   = "geodata";
+const IDB_KEY     = "asher-v1";
+
+function openDb() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = e => e.target.result.createObjectStore(IDB_STORE);
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror   = e => reject(e.target.error);
+    });
+}
+
+function idbGet(db, key) {
+    return new Promise((resolve, reject) => {
+        const req = db.transaction(IDB_STORE).objectStore(IDB_STORE).get(key);
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror   = e => reject(e.target.error);
+    });
+}
+
+function idbSet(db, key, value) {
+    return new Promise((resolve, reject) => {
+        const tx  = db.transaction(IDB_STORE, "readwrite");
+        const req = tx.objectStore(IDB_STORE).put(value, key);
+        req.onsuccess = () => resolve();
+        req.onerror   = e => reject(e.target.error);
+    });
+}
 
 export const COLONIAL_LANGUAGES = [
     { code: "stan1293", name: "English" },
@@ -40,22 +68,50 @@ function buildColonialAreaRows(areaTraditional, areaContemporary) {
     });
 }
 
+if (!window.__asherCache) window.__asherCache = { data: null, inflight: null };
+const store = window.__asherCache;
+
 export async function loadAsherColonialData() {
-    if (cache) return cache;
+    // 1. In-memory: instant, same-page
+    if (store.data) return store.data;
+    if (store.inflight) return store.inflight;
 
-    const [traditionalGeo, contemporaryGeo] = await Promise.all([
-        d3.json(new URL("../data/traditional/languages.geojson", import.meta.url)),
-        d3.json(new URL("../data/contemporary/languages.geojson", import.meta.url))
-    ]);
+    store.inflight = (async () => {
 
-    const areaTraditional = sumAreaByCode(traditionalGeo.features ?? []);
-    const areaContemporary = sumAreaByCode(contemporaryGeo.features ?? []);
+        // 2. IndexedDB: fast, cross-page, no re-parsing
+        const db     = await openDb();
+        const cached = await idbGet(db, IDB_KEY);
 
-    cache = {
-        traditionalGeo,
-        contemporaryGeo,
-        colonialRows: buildColonialAreaRows(areaTraditional, areaContemporary)
-    };
+        if (cached) {
+            store.data    = cached;
+            store.inflight = null;
+            return cached;
+        }
 
-    return cache;
+        // 3. Full load — only happens once ever (or when IDB_KEY changes)
+        const [traditionalGeo, contemporaryGeo] = await Promise.all([
+            d3.json(new URL("../data/traditional/languages.geojson",  import.meta.url)),
+            d3.json(new URL("../data/contemporary/languages.geojson", import.meta.url))
+        ]);
+
+        const areaTraditional  = sumAreaByCode(traditionalGeo.features ?? []);
+        const areaContemporary = sumAreaByCode(contemporaryGeo.features ?? []);
+
+        store.data = {
+            traditionalGeo,
+            contemporaryGeo,
+            colonialRows: buildColonialAreaRows(areaTraditional, areaContemporary)
+        };
+
+        // Store for next page load — fire and forget
+        idbSet(db, IDB_KEY, store.data).catch(e =>
+            console.warn("IDB write failed:", e)
+        );
+
+        store.inflight = null;
+        return store.data;
+    })();
+
+    return store.inflight;
 }
+
