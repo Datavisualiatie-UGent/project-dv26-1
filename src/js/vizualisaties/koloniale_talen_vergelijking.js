@@ -18,7 +18,24 @@ function formatPct(value) {
     return `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
 }
 
+function createTooltip(container) {
+    return d3.select(container)
+        .append("div")
+        .style("position", "fixed")
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .style("z-index", 2000)
+        .style("padding", "8px 10px")
+        .style("background", "rgba(20, 20, 20, 0.92)")
+        .style("color", "#fff")
+        .style("border-radius", "8px")
+        .style("font-size", "12px")
+        .style("line-height", "1.35");
+}
+
 function renderComparativeBars(container, rows) {
+    const tooltip = createTooltip(container);
+
     const svg = d3.select(container)
         .append("svg")
         .attr("width", WIDTH)
@@ -64,8 +81,22 @@ function renderComparativeBars(container, rows) {
         .attr("width", barWidth)
         .attr("height", d => y(0) - y(d.traditionalArea))
         .attr("fill", "#70543e")
-        .append("title")
-        .text(d => `Traditioneel: ${d3.format(".4f")(d.traditionalArea)}`);
+        .style("cursor", "pointer")
+        .on("mouseenter", (event, d) => {
+            tooltip
+                .style("opacity", 1)
+                .text(d3.format(".6f")(d.traditionalArea))
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mousemove", (event) => {
+            tooltip
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mouseleave", () => {
+            tooltip.style("opacity", 0);
+        });
 
     groups.append("rect")
         .attr("x", barWidth + 8)
@@ -73,8 +104,22 @@ function renderComparativeBars(container, rows) {
         .attr("width", barWidth)
         .attr("height", d => y(0) - y(d.contemporaryArea))
         .attr("fill", "#2f7d4f")
-        .append("title")
-        .text(d => `Hedendaags: ${d3.format(".4f")(d.contemporaryArea)}`);
+        .style("cursor", "pointer")
+        .on("mouseenter", (event, d) => {
+            tooltip
+                .style("opacity", 1)
+                .text(d3.format(".6f")(d.contemporaryArea))
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mousemove", (event) => {
+            tooltip
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mouseleave", () => {
+            tooltip.style("opacity", 0);
+        });
 
     const legend = svg.append("g")
         .attr("transform", `translate(${WIDTH - 350}, ${MARGIN_BAR.top})`);
@@ -98,6 +143,8 @@ function renderComparativeBars(container, rows) {
 }
 
 function renderDeltaBars(container, rows) {
+    const tooltip = createTooltip(container);
+
     const svg = d3.select(container)
         .append("svg")
         .attr("width", WIDTH)
@@ -145,8 +192,22 @@ function renderDeltaBars(container, rows) {
         .attr("width",  d => Math.abs(x(d.deltaPct) - x(0)))
         .attr("height", y.bandwidth())
         .attr("fill", d => d.deltaPct >= 0 ? "#2f7d4f" : "#b5473c")
-        .append("title")
-        .text(d => `${d.name}: ${formatPct(d.deltaPct)}`);
+        .style("cursor", "pointer")
+        .on("mouseenter", (event, d) => {
+            tooltip
+                .style("opacity", 1)
+                .text(d3.format(".6f")(d.deltaPct))
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mousemove", (event) => {
+            tooltip
+                .style("left", `${event.clientX + 12}px`)
+                .style("top", `${event.clientY - 12}px`);
+        })
+        .on("mouseleave", () => {
+            tooltip.style("opacity", 0);
+        });
 
     svg.append("g")
         .selectAll("text")

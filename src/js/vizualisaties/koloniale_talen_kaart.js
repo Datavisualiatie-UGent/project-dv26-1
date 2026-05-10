@@ -117,6 +117,19 @@ async function start() {
         .style("height", `${HEIGHT}px`)
         .style("flex-shrink", "0");
 
+    const tooltip = d3.select(wrapper)
+        .append("div")
+        .style("position", "fixed")
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .style("z-index", 2200)
+        .style("padding", "8px 10px")
+        .style("background", "rgba(20, 20, 20, 0.92)")
+        .style("color", "#fff")
+        .style("border-radius", "8px")
+        .style("font-size", "12px")
+        .style("line-height", "1.35");
+
     const canvasTraditional = mapContainer
         .append("canvas")
         .attr("width", WIDTH)
@@ -231,6 +244,21 @@ async function start() {
         return null;
     }
 
+    function findLanguageCodeAtPointer(event) {
+        const [sx, sy] = d3.pointer(event, svg.node());
+        const [mx, my] = currentTransform.invert([sx, sy]);
+        const coords = projection.invert([mx, my]);
+        if (!coords) return null;
+
+        const rows = datasetIndex[dataset].rows;
+        for (let i = rows.length - 1; i >= 0; i--) {
+            const row = rows[i];
+            if (!row.code) continue;
+            if (d3.geoContains(row.feature, coords)) return row.code;
+        }
+        return null;
+    }
+
     function render() {
         d3.select(canvasTraditional).style("display",  dataset === "traditional"  ? null : "none");
         d3.select(canvasContemporary).style("display", dataset === "contemporary" ? null : "none");
@@ -246,6 +274,25 @@ async function start() {
             .attr("stroke",       dataset === "traditional" ? "#5a3d1f" : "#1b4d31")
             .attr("stroke-width", 0.7)
             .style("cursor", "pointer")
+            .on("mouseenter", (event, feature) => {
+                const code = feature?.properties?.["cldf:languageReference"];
+                const label = code && codeToLanguage[code]
+                    ? codeToLanguage[code].name
+                    : (feature?.properties?.title ?? "Onbekende taal");
+                tooltip
+                    .style("opacity", 1)
+                    .text(label)
+                    .style("left", `${event.clientX + 12}px`)
+                    .style("top", `${event.clientY - 12}px`);
+            })
+            .on("mousemove", (event) => {
+                tooltip
+                    .style("left", `${event.clientX + 12}px`)
+                    .style("top", `${event.clientY - 12}px`);
+            })
+            .on("mouseleave", () => {
+                tooltip.style("opacity", 0);
+            })
             .on("click", (event, feature) => {
                 event.stopPropagation();
                 const code = feature?.properties?.["cldf:languageReference"];
@@ -254,11 +301,7 @@ async function start() {
                 languageInput.value = `${codeToLanguage[code].name} (${code})`;
                 languageInput.style.borderColor = "";
                 render();
-            })
-            .selectAll("title")
-            .data(d => [d])
-            .join("title")
-            .text(d => d?.properties?.title ?? "unknown");
+            });
 
         const language = codeToLanguage[selectedCode];
         subtitle.text(`${language?.name ?? selectedCode} (${selectedCode}) | ${dataset === "traditional" ? "Traditioneel" : "Hedendaags"}`);
@@ -302,6 +345,24 @@ async function start() {
     toggleContemporary.addEventListener("click", () => setActiveDataset("contemporary"));
     zoomReset.addEventListener("click", () => {
         svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity);
+    });
+
+    svg.on("mousemove.tooltip", (event) => {
+        const code = findLanguageCodeAtPointer(event);
+        if (!code || !codeToLanguage[code]) {
+            tooltip.style("opacity", 0);
+            return;
+        }
+
+        tooltip
+            .style("opacity", 1)
+            .text(codeToLanguage[code].name)
+            .style("left", `${event.clientX + 12}px`)
+            .style("top", `${event.clientY - 12}px`);
+    });
+
+    svg.on("mouseleave.tooltip", () => {
+        tooltip.style("opacity", 0);
     });
 
     svg.on("click", pickLanguageFromMap);
