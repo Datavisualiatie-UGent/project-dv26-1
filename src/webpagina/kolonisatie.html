@@ -8,9 +8,6 @@
     <title>Koloniale Verschuiving</title>
 
     <link rel="stylesheet" href="./stijl.css">
-    <link rel="prefetch" href="kolonisatie.html">
-    <link rel="prefetch" href="/data/traditional/languages.geojson">
-    <link rel="prefetch" href="/data/contemporary/languages.geojson">
 </head>
 
 <script>
@@ -287,14 +284,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("./sw.js");
         }
-    </script>
-
-    <script type="speculationrules">
-    {
-        "prerender": [
-            { "urls": ["index.html"] }
-        ]
-    }
     </script>
 
 </body>
