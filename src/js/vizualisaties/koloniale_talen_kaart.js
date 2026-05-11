@@ -272,12 +272,14 @@ async function start() {
 
     async function loadBoundaries(year) {
         if (boundariesCache[year]) return boundariesCache[year];
-        // const url = new URL(`../data/boundaries/Year_${year}.shp`, import.meta.url);
-        const shpUrl = `${location.origin}${location.pathname.includes("project_dv26-1")
-            ? "/project_dv26-1"
-            : ""}/data/boundaries/Year_${year}.shp`;
+        // Resolve relative to the page (dist/), not the JS module path.
+        // This keeps URLs stable if JS is moved/bundled.
+        const shpUrl = new URL(`./data/boundaries/Year_${year}.shp`, document.baseURI);
         try {
-            const geojson = await shp(shpUrl);
+            if (typeof shp !== "function") {
+                throw new Error("shp() is not available. Ensure shpjs is loaded before enabling boundaries.");
+            }
+            const geojson = await shp(shpUrl.href);
             boundariesCache[year] = geojson;
             return geojson;
         } catch (error) {
