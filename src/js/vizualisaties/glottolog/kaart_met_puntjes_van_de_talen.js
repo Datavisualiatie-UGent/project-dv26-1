@@ -76,7 +76,7 @@ svg.append("rect")
     .attr("width", width)
     .attr("height", height)
     .attr("rx", 10)
-    .attr("fill", "#242424")
+    .attr("fill", "#dde192")
 
 svg.selectAll()
     .data(puntjes)
