@@ -334,6 +334,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         <button type="button" id="zoom-reset"
                             class="kaart-btn">Reset zoom</button>
 
+                        <label>
+                            <input type="checkbox" id="toggle-boundaries">
+                            Show historical boundaries
+                        </label>
+
+                        <label>
+                            Year:
+                            <input type="range" id="boundary-year" min="0" max="7" value="0" step="1">
+                            <span id="year-label">1800</span>
+                        </label>
+
                     </div>
 
                     <div class="kaart-wrapper" id="kaart-wrapper"></div>
@@ -347,6 +358,9 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <script src="./js/main.js" type="module"></script>
+
+    <script src="https://unpkg.com/proj4@latest/dist/proj4.js"></script>
+    <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
 
     <script>
         if ("serviceWorker" in navigator) {

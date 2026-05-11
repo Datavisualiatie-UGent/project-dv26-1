@@ -60,6 +60,9 @@ async function start() {
     const toggleTraditional   = element.querySelector("#toggle-traditional");
     const toggleContemporary  = element.querySelector("#toggle-contemporary");
     const zoomReset        = element.querySelector("#zoom-reset");
+    const toggleBoundaries = element.querySelector("#toggle-boundaries");
+    const boundaryYear     = element.querySelector("#boundary-year");
+    const yearLabel        = element.querySelector("#year-label");
 
     const { traditionalGeo, contemporaryGeo } = await loadAsherColonialData();
 
@@ -107,6 +110,73 @@ async function start() {
     languageInput.value = selectedCode
         ? `${codeToLanguage[selectedCode].name} (${selectedCode})`
         : "";
+
+    const years = [1800, 1914, 1918, 1939, 1945, 1970, 1990, 2000];
+    let boundariesEnabled = false;
+    let currentYearIndex = 0;
+    const boundariesCache = {};
+
+    const colonialLanguageNames = new Set(["spanish", "portuguese", "english", "french"]);
+
+    const empireColors = {
+        spanish: "rgba(220, 60, 60, 0.55)",
+        portuguese: "rgba(65, 140, 80, 0.55)",
+        english: "rgba(70, 110, 230, 0.55)",
+        french: "rgba(115, 70, 200, 0.55)"
+    };
+
+    const empireTerritoriesByLanguage = {
+        spanish: new Set([
+            "Spain",
+            "New Spain of Mexico",
+            "Peru",
+            "Cuba",
+            "Puerto Rico",
+            "Philippine Islands",
+            "Guayana",
+            "Saint Dominic",
+            "New Spain of Mexico"
+        ]),
+        portuguese: new Set([
+            "Portugal",
+            "Brazil",
+            "Cabo Verde",
+            "Madeira",
+            "Azores"
+        ]),
+        english: new Set([
+            "United Kingdom",
+            "Bermuda",
+            "Bahamas",
+            "Barbados",
+            "Anguilla",
+            "Antigua and Barbuda",
+            "Cayman Islands",
+            "Dominica",
+            "Jamaica",
+            "Montserrat",
+            "Saint Kitts and Nevis",
+            "Saint Lucia",
+            "Saint Martin",
+            "Saint Vincent and the Grenadines",
+            "Trinidad",
+            "Turks and Caicos Islands",
+            "Falkland Islands",
+            "Hudson's Bay Company",
+            "Isle of Man",
+            "Bermuda",
+            "Guernsey",
+            "Jersey"
+        ]),
+        french: new Set([
+            "France",
+            "Guadeloupe",
+            "Martinique",
+            "Saint-Domingue",
+            "Isle de France",
+            "Saint Barthelemy"
+        ])
+    };
 
     // D3 setup — attached to wrapper, not element
     const mapContainer = d3.select(wrapper)
@@ -180,6 +250,8 @@ async function start() {
 
     const layerHighlight = mapRoot.append("g");
 
+    const layerBoundaries = mapRoot.append("g");
+
     function drawMutedCanvas(canvas, features) {
         const context = canvas.getContext("2d");
         context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -197,6 +269,50 @@ async function start() {
 
     drawMutedCanvas(canvasTraditional, dataByDataset.traditional.map(r => r.feature));
     drawMutedCanvas(canvasContemporary, dataByDataset.contemporary.map(r => r.feature));
+
+    async function loadBoundaries(year) {
+        if (boundariesCache[year]) return boundariesCache[year];
+        const url = `${location.origin}/data/boundaries/Year_${year}.shp`;
+        try {
+            const geojson = await shp(url);
+            boundariesCache[year] = geojson;
+            return geojson;
+        } catch (error) {
+            console.error(`Failed to load boundaries for ${year}:`, error);
+            return { features: [] };
+        }
+    }
+
+    function renderBoundaries() {
+        if (!boundariesEnabled) {
+            layerBoundaries.selectAll("path").remove();
+            return;
+        }
+        const selectedLanguage = codeToLanguage[selectedCode];
+        const selectedLanguageName = selectedLanguage?.name?.toLowerCase() ?? "";
+        const isColonial = colonialLanguageNames.has(selectedLanguageName);
+        const empireTerritories = empireTerritoriesByLanguage[selectedLanguageName] || new Set();
+        const empireFill = empireColors[selectedLanguageName] || "rgba(0, 0, 0, 0)";
+        const year = years[currentYearIndex];
+        loadBoundaries(year).then(geojson => {
+            layerBoundaries.selectAll("path")
+                .data(geojson.features)
+                .join("path")
+                .attr("d", path)
+                .attr("fill", d => {
+                    if (!isColonial) return "none";
+                    const name = d.properties?.NAME;
+                    if (empireTerritories.has(name)) {
+                        return empireFill;
+                    }
+                    return "none";
+                })
+                .attr("fill-opacity", 0.55)
+                .attr("stroke", "#000")
+                .attr("stroke-width", 0.8)
+                .attr("stroke-opacity", 1);
+        });
+    }
 
     const subtitle = svg.append("text")
         .attr("x", 20)
@@ -227,6 +343,7 @@ async function start() {
         toggleTraditional.classList.toggle("active",  next === "traditional");
         toggleContemporary.classList.toggle("active", next === "contemporary");
         render();
+        if (boundariesEnabled) renderBoundaries();
     }
 
     function normalizeSearchValue(rawValue) {
@@ -300,6 +417,7 @@ async function start() {
                 languageInput.value = `${codeToLanguage[code].name} (${code})`;
                 languageInput.style.borderColor = "";
                 render();
+                if (boundariesEnabled) renderBoundaries();
             });
 
         const language = codeToLanguage[selectedCode];
@@ -316,6 +434,7 @@ async function start() {
         languageInput.style.borderColor = "";
         languageInput.value = `${codeToLanguage[resolvedCode].name} (${resolvedCode})`;
         render();
+        if (boundariesEnabled) renderBoundaries();
     }
 
     function pickLanguageFromMap(event) {
@@ -332,6 +451,7 @@ async function start() {
             languageInput.value = `${codeToLanguage[row.code].name} (${row.code})`;
             languageInput.style.borderColor = "";
             render();
+            if (boundariesEnabled) renderBoundaries();
             return;
         }
     }
@@ -344,6 +464,17 @@ async function start() {
     toggleContemporary.addEventListener("click", () => setActiveDataset("contemporary"));
     zoomReset.addEventListener("click", () => {
         svg.transition().duration(250).call(zoom.transform, d3.zoomIdentity);
+    });
+
+    toggleBoundaries.addEventListener("change", () => {
+        boundariesEnabled = toggleBoundaries.checked;
+        renderBoundaries();
+    });
+
+    boundaryYear.addEventListener("input", () => {
+        currentYearIndex = +boundaryYear.value;
+        yearLabel.textContent = years[currentYearIndex];
+        if (boundariesEnabled) renderBoundaries();
     });
 
     svg.on("mousemove.tooltip", (event) => {
@@ -367,6 +498,7 @@ async function start() {
     svg.on("click", pickLanguageFromMap);
 
     render();
+    renderBoundaries();
 }
 
 start();
