@@ -272,9 +272,12 @@ async function start() {
 
     async function loadBoundaries(year) {
         if (boundariesCache[year]) return boundariesCache[year];
-        const url = `${location.origin}/data/boundaries/Year_${year}.shp`;
+        // const url = new URL(`../data/boundaries/Year_${year}.shp`, import.meta.url);
+        const shpUrl = `${location.origin}${location.pathname.includes("project_dv26-1")
+            ? "/project_dv26-1"
+            : ""}/data/boundaries/Year_${year}.shp`;
         try {
-            const geojson = await shp(url);
+            const geojson = await shp(shpUrl);
             boundariesCache[year] = geojson;
             return geojson;
         } catch (error) {
