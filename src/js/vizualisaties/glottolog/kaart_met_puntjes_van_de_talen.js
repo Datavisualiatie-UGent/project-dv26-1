@@ -5,7 +5,7 @@ import { data } from "../../data.js";
 const id = "kaart met puntjes van de talen";
 const element = document.getElementById(id);
 
-const width = 1300;
+const width = 1500;
 const height = 700;
 
 const svg = d3.select(element).append("svg").style("width", "100%").style("height", height)
